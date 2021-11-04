@@ -1,0 +1,74 @@
+@BASE_URL=http://localhost:3000/api/v1
+
+GET {{BASE_URL}}/members/jdyj@naver.com
+
+GET {{BASE_URL}}/members?skip=0&limit=4
+
+GET {{BASE_URL}}/members
+
+POST {{BASE_URL}}/members/register
+Content-Type: application/json
+
+{
+    "name" : "test",
+    "email": "zzczxcv@naver.com",
+    "password": "pasbbsword",
+    "mobile": "010-1222-1234",
+    "type" : "S",
+    "birthDate" : "2021-03-03"
+}
+
+POST {{BASE_URL}}/members/professor/login
+Content-Type: application/json
+
+{
+    "email" : "professor1@naver.com",
+    "password": "pasbbsword"
+}
+
+GET {{BASE_URL}}/members/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImExMWQxMjE5LTIyZjctNGEyZS05YjkwLWUxMWQ0NDZhNDU5NiIsIm5hbWUiOiJwcm9mZXNzb3IxIiwiaWF0IjoxNjI5MTI3ODI3LCJleHAiOjE2MjkxMzUwMjd9.D4uoAvy-BA4AQG1JWk733OJ2Wi3_PKxVH5MmKtQSpY8
+
+GET {{BASE_URL}}/members/check
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImExMWQxMjE5LTIyZjctNGEyZS05YjkwLWUxMWQ0NDZhNDU5NiIsIm5hbWUiOiJwcm9mZXNzb3IxIiwiaWF0IjoxNjI5MTI3ODI3LCJleHAiOjE2MjkxMzUwMjd9.D4uoAvy-BA4AQG1JWk733OJ2Wi3_PKxVH5MmKtQSpY8
+
+PUT {{BASE_URL}}/members/158d6b47-ce6f-48b0-afc1-bb59f91b99f2
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="email"
+
+as111@naver.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
+
+password
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+test
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="grade"
+
+2
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="department"
+
+컴퓨터공학과
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="studentID"
+
+1810181
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="mobile"
+
+010-1234-1234
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profileImg"; filename="taxonomy.jpg"
+Content-Type: image/jpg
+
+< ../../../testdata/taxonomy.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+DELETE {{BASE_URL}}/members/4119a188-24da-4728-a1c8-271f224be847

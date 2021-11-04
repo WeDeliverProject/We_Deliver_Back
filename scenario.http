@@ -1,0 +1,214 @@
+@BASE_URL=http://localhost:3000/api/v1
+
+# @name professor
+POST {{BASE_URL}}/members/register
+Content-Type: application/json
+
+{
+    "name" : "profess",
+    "email": "profs@naver.com",
+    "password": "pasbbsword",
+    "mobile": "010-1222-1234",
+    "type" : "P",
+    "birthDate" : "2021-03-03"
+}
+
+###
+
+@professorId={{professor.response.body.id}}
+@professorEmail={{professor.response.body.email}}
+
+# @name student1
+POST {{BASE_URL}}/members/register
+Content-Type: application/json
+
+{
+    "name" : "stud1",
+    "email": "stude44@naver.com",
+    "password": "pasbbsword",
+    "mobile": "010-1222-1234",
+    "type" : "S",
+    "birthDate" : "2021-03-03"
+}
+
+###
+
+@student1Id={{student1.response.body.id}}
+@student1Email={{student1.response.body.email}}
+
+# @name student2
+POST {{BASE_URL}}/members/register
+Content-Type: application/json
+
+{
+    "name" : "student2",
+    "email": "stud@naver.com",
+    "password": "pasbbsword",
+    "mobile": "010-1222-1234",
+    "type" : "S",
+    "birthDate" : "2021-03-03"
+}
+
+###
+
+@student2Id={{student2.response.body.id}}
+@student2Email={{student2.response.body.email}}
+
+# @name professorLogin
+POST {{BASE_URL}}/members/professor/login
+Content-Type: application/json
+
+{
+    "email": "{{professorEmail}}",
+    "password": "pasbbsword"
+}
+
+###
+
+# @name student1Login
+POST {{BASE_URL}}/members/student/login
+Content-Type: application/json
+
+{
+    "email" : "{{student1Email}}",
+    "password" : "pasbbsword"
+}
+
+###
+
+# @name student2Login
+POST {{BASE_URL}}/members/student/login
+Content-Type: application/json
+
+{
+    "email" : "{{student2Email}}",
+    "password" : "pasbbsword"
+}
+
+###
+
+# @name class
+POST {{BASE_URL}}/classes
+Content-Type: application/json
+
+{
+    "name" : "지구과학",
+    "code" : "AZSVBFV",
+    "memberId" : "{{professorId}}"
+}
+
+###
+
+@classCode={{class.response.body.code}}
+
+# @name enrol1
+POST {{BASE_URL}}/enrol
+Content-Type: application/json
+
+{
+    "memberId" : "{{student1Id}}",
+    "classCode" : "{{classCode}}",
+    "isAccept": 0
+}
+
+###
+
+# @name enrol2
+POST {{BASE_URL}}/enrol
+Content-Type: application/json
+
+{
+    "memberId" : "{{student2Id}}",
+    "classCode" : "{{classCode}}",
+    "isAccept": 0
+}
+
+###
+
+// 수강 신청 수락 1
+PUT {{BASE_URL}}/enrol
+Content-Type: application/json
+
+{
+    "memberId" : "{{student1Id}}",
+    "classCode" : "{{classCode}}"
+}
+
+###
+
+// 수강 신청 수락 2
+PUT {{BASE_URL}}/enrol
+Content-Type: application/json
+
+{
+    "memberId" : "{{student2Id}}",
+    "classCode" : "{{classCode}}"
+}
+
+###
+
+// 팀생성
+# @name team1
+POST {{BASE_URL}}/teams
+Content-Type: application/json
+
+{
+    "name" : "Team1",
+    "classCode" : "{{classCode}}"
+}
+
+###
+
+@team1Id={{team1.response.body.id}}
+
+// 팀에 학생 추가하기
+POST {{BASE_URL}}/teams/students
+Content-Type: application/json
+
+[
+    {
+        "teamId" : "{{team1Id}}",
+        "memberId": "{{student1Id}}"
+    },
+    {
+        "teamId" : "{{team1Id}}",
+        "memberId" : "{{student2Id}}"
+    }
+]
+
+###
+
+# @name assignment
+POST {{BASE_URL}}/assignments
+Content-Type: application/json
+
+{
+    "name" : "과제 테스트",
+    "content" : "과제 테스트 내용",
+    "progress" : "1",
+    "point" : "100",
+    "startDate" : "2021-08-04 14:39:22",
+    "endDate" : "2021-08-04 14:39:22",
+    "classCode" : "{{classCode}}",
+    "teams":["{{team1Id}}"]
+}
+
+###
+
+@assignmentId = {{assignment.response.body.id}}
+
+// 과제 조회
+# @name assignmentTeam
+GET {{BASE_URL}}/assignments?assignmentId={{assignmentId}}&teamId={{team1Id}}
+
+@assignmentTeamId = {{assignmentTeam.response.body.results[0].id}}
+
+###
+
+// 과제 제출
+POST {{BASE_URL}}/assignments/submit/{{assignmentTeamId}}
+Content-Type: application/json
+
+{
+    "contents": "테스트테스트"
+}
