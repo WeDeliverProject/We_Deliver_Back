@@ -2,20 +2,28 @@ import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
 import * as CommonMd from "../middlewares";
 import { generateToken, decodeToken } from "../../middlewares/jwtMd";
-import fs from "fs";
-import path from "path";
 
-export const getDataFromBodyMd = async (ctx, next) => {
-  const { email, password, name, type, mobile, birthDate } = ctx.request.body;
+export const readAllMd = async (ctx, next) => {
+  const { category } = ctx.params;
+  const { conn } = ctx.state;
 
-  ctx.state.reqBody = {
-    email,
-    password,
-    name,
-    type,
-    mobile,
-    birthDate,
-  };
+  const rows = await conn.query(
+    "SELECT * FROM restaurant r WHERE category = ?",[category]
+  );
+
+  const reviews = await conn.query(
+    "SELECT * FROM review"
+  );
+
+
+  for(let i=0; i<rows.length; i++) {
+    const r = reviews.filter((review) => {
+      if(review.restaurant_id === rows[i].id) return true;
+    });
+    rows[i].reviews = r;
+  }
+
+  ctx.state.body = rows;
 
   await next();
 };
@@ -261,19 +269,15 @@ export const changePasswordMd = async (ctx, next) => {
   await next();
 };
 
-// eslint-disable-next-line max-len
-export const create = [
-  CommonMd.createConnectionMd,
-  getDataFromBodyMd,
-  validateDataMd,
-  isDuplicatedEmailMd,
-  saveMemberMd,
-  queryMemberMdByEmail,
-  CommonMd.responseMd,
-];
 
 export const Login = [
   CommonMd.createConnectionMd,
   loginMd,
   CommonMd.responseMd,
 ];
+
+export const readAll = [
+  CommonMd.createConnectionMd,
+  readAllMd,
+  CommonMd.responseMd
+]

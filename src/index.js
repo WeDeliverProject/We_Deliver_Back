@@ -1,14 +1,14 @@
 import Koa from "koa";
 import serve from "koa-static";
 import KoaBody from "koa-body";
-import mariadb from "mariadb";
+import mysql from "mysql";
 import path from "path";
 import Config from "./config";
 import Router from "./router";
 import { errorHandleMd, jwtMd } from "./middlewares";
 import { createServer } from "http";
 
-const pool = mariadb.createPool({
+const pool = mysql.createConnection({
   host: Config.DB_HOST,
   user: Config.DB_USER,
   password: Config.DB_PASSWORD,
