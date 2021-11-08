@@ -4,6 +4,6 @@ import * as reviews from "./reviews";
 const router = new Router();
 
 // 생성
-router.post("/register", ...reviews.create);
+router.post("/", ...reviews.create);
 
 export default router;

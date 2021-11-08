@@ -5,275 +5,66 @@ import { generateToken, decodeToken } from "../../middlewares/jwtMd";
 import fs from "fs";
 import path from "path";
 
-export const getDataFromBodyMd = async (ctx, next) => {
-  const { email, password, name, type, mobile, birthDate } = ctx.request.body;
 
-  ctx.state.reqBody = {
-    email,
-    password,
-    name,
-    type,
-    mobile,
-    birthDate,
-  };
+export const saveReviewMd = async(ctx, next) => {
 
-  await next();
-};
+  const { conn } = ctx.state;
+  const { restaurantId, starRating, contents, memberId } = ctx.request.body;
 
-export const validateDataMd = async (ctx, next) => {
-  const { email, password, name, type, mobile, birthDate } = ctx.state.reqBody;
+  const images = ctx.request.files.image === undefined ? [] : ctx.request.files.image;
 
-  if (!email || !password || !type || !name || !mobile || !birthDate) {
-    throw Boom.badRequest("field is not fulfiled");
+  const imageNames = [];
+  for(let i=0; i < images.length; i++) {
+    const appDir = path.dirname(images[i].path);
+    const imageName = `${Date.now()}_${images[i].name}`;
+    await fs.renameSync(images[i].path, `${appDir}/${imageName}`);
+    imageNames.push(imageName);
   }
 
-  await next();
-};
+  const reviewId = UUID();
 
-export const validateUpdateDataMd = async (ctx, next) => {
-  // const {
-  //   // eslint-disable-next-line no-unused-vars
-  //   name,
-  //   password,
-  //   mobile,
-  // } = ctx.request.body;
-
-  // // if (!name || !password || !mobile) {
-  // //   throw Boom.badRequest("field is not fulfiled");
-  // // }
-
-  await next();
-};
-
-export const isDuplicatedEmailMd = async (ctx, next) => {
-  const { email } = ctx.state.reqBody;
-  const { files } = ctx.request;
-  const { conn } = ctx.state;
-
-  console.log(files);
-
-  const rows = await conn.query("SELECT * FROM tb_member WHERE email = ?", [
-    email,
-  ]);
-
-  if (rows.length > 0) {
-    throw Boom.badRequest("duplicated email");
-  }
-
-  await next();
-};
-
-export const saveMemberMd = async (ctx, next) => {
-  const { email, password, name, type, mobile, birthDate } = ctx.state.reqBody;
-  const { conn } = ctx.state;
-
-  // eslint-disable-next-line max-len
   await conn.query(
-    "INSERT INTO tb_member(id, email, name, password, type, mobile, birthDate) \
-    VALUES (?, ?, ?, password(?), ?, ?, ?)",
-    [UUID(), email, name, password, type, mobile, birthDate]
-  );
+    "INSERT INTO review(id, restaurant_id, star_rating, contents, member_id) VALUES(?,?,?,?,?)"
+    ,[reviewId,restaurantId, starRating, contents, memberId]
+  )
 
-  await next();
-};
-
-export const queryMemberMdByEmail = async (ctx, next) => {
-  const { email } = ctx.state.reqBody;
-  const { conn } = ctx.state;
-
-  const rows = await conn.query(
-    "SELECT id, email, name, type, mobile, createdAt FROM tb_member WHERE email = ?",
-    [email]
-  );
-
-  ctx.state.body = rows[0];
-
-  await next();
-};
-
-export const queryMemberMdById = async (ctx, next) => {
-  const { id } = ctx.params;
-  const { conn } = ctx.state;
-
-  const sql =
-    "SELECT id, email, name, type, mobile, createdAt, birthdate, department, grade, studentID \
-    FROM tb_member WHERE id = ?";
-  const rows = await conn.query(sql, [id]);
-
-  ctx.state.body = {
-    ...rows[0],
-  };
-
-  await next();
-};
-
-export const removeMemberMd = async (ctx, next) => {
-  const { conn } = ctx.state;
-  const { id } = ctx.params;
-
-  await conn.query("DELETE FROM tb_member WHERE id = ?", [id]);
-  await next();
-};
-
-export const readMemberIdMd = async (ctx, next) => {
-  const { id } = ctx.params;
-  const { conn } = ctx.state;
-
-  const rows = await conn.query(
-    "SELECT id, email, name, type, mobile, createdAt, studentID, grade, department, birthDate, profileImg \
-    FROM tb_member WHERE id = ?",
-    [id]
-  );
-
-  ctx.state.body = {
-    ...rows[0],
-  };
-
-  await next();
-};
-
-export const readMemberEmailMd = async (ctx, next) => {
-  const { email } = ctx.params;
-  const { conn } = ctx.state;
-
-  const rows = await conn.query(
-    "SELECT id, email, name, type, mobile, createdAt FROM tb_member WHERE id = ?",
-    [email]
-  );
-
-  ctx.state.body = {
-    ...rows[0],
-  };
-
-  await next();
-};
-
-export const readStudentLoginMd = async (ctx, next) => {
-  const { email, password } = ctx.request.body;
-  const { conn } = ctx.state;
-
-  const rows = await conn.query(
-    "SELECT id, name, email, mobile, profileImg, birthDate, department,grade, studentID \
-    FROM tb_member WHERE email = ? AND password = password(?)",
-    [email, password]
-  );
-
-  if (rows.length === 0) {
-    throw Boom.badRequest("wrong id password");
+  const tuples = imageNames.map((obj) => [obj, reviewId]);
+  if(images.length > 0) {
+    await conn.batch(
+      "INSERT INTO image(imgName, review_id) VALUES(?,?)"
+      ,tuples
+    )
   }
-
-  ctx.state.body = rows[0];
-
+  
   await next();
-};
+}
 
-export const loginMd = async (ctx, next) => {
-  const { userId, password } = ctx.request.body;
+export const listByRestaurantMd = async (ctx, next) => {
+  
   const { conn } = ctx.state;
+  const { restaurantId } = ctx.params;
 
-  const rows = await conn.query(
-    "SELECT id, user_id, password, nickname\
-    FROM member WHERE user_id = ? AND password = password(?)",
-    [userId, password]
-  );
-
-  if (rows.length === 0) {
-    throw Boom.badRequest("wrong id password");
-  }
-
-  ctx.state.body = rows[0];
-
-  await next();
-};
-
-export const readMemberAllMd = async (ctx, next) => {
-  const { skip, limit } = ctx.state.query;
-  const { conn } = ctx.state;
-
-  const rows = await conn.query(
-    "SELECT id, email, name, type, mobile, createdAt FROM tb_member LIMIT ?, ?",
-    [skip, limit]
-  );
-
-  ctx.state.body = {
-    results: rows,
-  };
-
-  await next();
-};
-
-export const readMemberAllCountMd = async (ctx, next) => {
-  const { conn } = ctx.state;
-
-  const rows = await conn.query("SELECT COUNT(*) AS count  FROM tb_member");
-
-  ctx.state.body = {
-    ...ctx.state.body,
-    total: rows[0].count,
-  };
-
-  await next();
-};
-
-export const checkMd = async (ctx, next) => {
-  const { user } = ctx.state;
-
-  if (user === undefined) {
-    ctx.status = 403;
-    throw Boom.badRequest("forbidden");
-  }
-
-  ctx.state.body = user;
-
-  await next();
-};
-
-export const getTokenMd = async (ctx, next) => {
-  const access_token = ctx.headers.authorization.split(" ")[1];
-
-  if (!access_token) Boom.badRequest("invalid token");
-  console.log(access_token);
-
-  const decoded = await decodeToken(access_token);
-  if (Date.now() / 1000 - decoded.iat > 60 * 10) {
-    throw Boom.badRequest("timeout");
-  }
-  console.log(decoded);
-  ctx.state.email = decoded.email;
-
-  await next();
-};
-
-export const changePasswordMd = async (ctx, next) => {
-  const { conn } = ctx.state;
-
-  const { password } = ctx.request.body;
-
-  const email = ctx.state.email;
   await conn.query(
-    "UPDATE tb_member SET password = password(?) where email = ?",
-    [password, email]
-  );
+    "SELECT r.contents, m.user_id, r.star_rating,  FROM review r \
+    JOIN image i ON r.id = i.review_id \
+    JOIN member m ON m.id = r.member_id \
+    WHERE r.restaurant_id = ?",
+    [restaurantId]
+  )
 
-  ctx.state.body = {
-    success: true,
-  };
-  await next();
-};
+
+}
+
 
 // eslint-disable-next-line max-len
 export const create = [
   CommonMd.createConnectionMd,
-  getDataFromBodyMd,
-  validateDataMd,
-  isDuplicatedEmailMd,
-  saveMemberMd,
-  queryMemberMdByEmail,
+  saveReviewMd,
   CommonMd.responseMd,
 ];
 
-export const Login = [
+export const listByRestaurant = [
   CommonMd.createConnectionMd,
-  loginMd,
-  CommonMd.responseMd,
-];
+  listByRestaurantMd,
+  CommonMd.responseMd
+]

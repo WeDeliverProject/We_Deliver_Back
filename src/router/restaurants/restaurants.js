@@ -20,10 +20,21 @@ export const readAllMd = async (ctx, next) => {
     const r = reviews.filter((review) => {
       if(review.restaurant_id === rows[i].id) return true;
     });
-    rows[i].reviews = r;
+    let sum = 0;
+    for(let j = 0; j<r.length; j++) {
+      console.log(r[j].star_rating);
+      sum += r[j].star_rating;
+    }
+    let star = sum / r.length;
+    
+    rows[i].reviewCount = r.length;
+    rows[i].star = star;
   }
 
-  ctx.state.body = rows;
+  ctx.state.body = {
+    count : rows.length,
+    results: rows
+  };
 
   await next();
 };
