@@ -44,15 +44,36 @@ export const listByRestaurantMd = async (ctx, next) => {
   const { conn } = ctx.state;
   const { restaurantId } = ctx.params;
 
-  await conn.query(
-    "SELECT r.contents, m.user_id, r.star_rating,  FROM review r \
+  const rows = await conn.query(
+    "SELECT r.contents, m.user_id, r.star_rating, r.member_id  FROM review r \
     JOIN image i ON r.id = i.review_id \
     JOIN member m ON m.id = r.member_id \
     WHERE r.restaurant_id = ?",
     [restaurantId]
   )
 
+  const orders = await conn.query(
+    "SELECT o.id, o.member_id, o.created_at, om.menu_id \
+    FROM order o \
+    JOIN order_menu om ON om.order_id = o.id \
+    where o.restaurant_id = ?"
+    ,[restaurantId]
+  )
 
+  for(let i=0; i<rows.length; i++) {
+    const o = orders.filter((order) => {
+      if(order.member_id === rows[i].id) return true;
+    });
+    
+    rows[i].orders = o;
+  }
+
+  ctx.state.body = { 
+    count: rows.length,
+    results : rows
+  }
+
+  await next();
 }
 
 

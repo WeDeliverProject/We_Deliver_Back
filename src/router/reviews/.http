@@ -1,6 +1,6 @@
 @BASE_URL=http://localhost:3000/api/v1
 
-GET {{BASE_URL}}/members/jdyj@naver.com
+GET {{BASE_URL}}/reviews/1
 
 GET {{BASE_URL}}/members?skip=0&limit=4
 
