@@ -39,7 +39,7 @@ const main = async () => {
     app.use(Router.routes()).use(Router.allowedMethods());
     app.use(serve(path.join(__dirname, "../upload")));
     server.listen(3000);
-    console.log("Join web server started [port:3000]");
+    console.log("WeDeliver Server started");
   } catch (e) {
     console.log(e);
   }

@@ -4,7 +4,7 @@ import * as menu from "./menu";
 const router = new Router();
 
 // 생성
-router.post("/register", ...menu.create);
+router.get("/:restaurantId", ...menu.menuList);
 
 
 export default router;
