@@ -1,7 +1,21 @@
 @BASE_URL=http://localhost:3000/api/v1
 
-GET {{BASE_URL}}/members/jdyj@naver.com
+POST {{BASE_URL}}/members/register
+Content-Type: application/json
 
-GET {{BASE_URL}}/members?skip=0&limit=4
+{
+    "nickname" : "test",
+    "userId" : "test123zxcv",
+    "password": "pasbbsword"
+}
+
+
+POST {{BASE_URL}}/members/login
+Content-Type: application/json
+
+{
+    "userId" : "test123zxcv",
+    "password" : "pasbbsword"
+}
 
 GET {{BASE_URL}}/members

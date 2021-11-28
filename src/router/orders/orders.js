@@ -8,7 +8,9 @@ import path from "path";
 export const createOrderMd = async (ctx, next) => {
   
   const { conn } = ctx.state;
-  const { menu } = ctx.request.body;
+  const { result } = ctx.request.body;
+
+  console.log(ctx.request.body);
 
   // menu
   // [
@@ -22,4 +24,10 @@ export const createOrderMd = async (ctx, next) => {
 
   await next();
 };
+
+export const create = [
+  CommonMd.createConnectionMd,
+  createOrderMd,
+  CommonMd.responseMd
+]
 
