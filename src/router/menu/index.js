@@ -3,8 +3,11 @@ import * as menu from "./menu";
 
 const router = new Router();
 
-// 생성
+// 메뉴 조회
 router.get("/:restaurantId", ...menu.menuList);
+
+// 추가 메뉴 조회
+router.get("/plusmenu/:menuId", ...menu.plusMenuList);
 
 
 export default router;

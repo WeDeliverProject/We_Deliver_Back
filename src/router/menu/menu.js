@@ -18,8 +18,32 @@ export const menuListMd = async (ctx, next) => {
   await next();
 };
 
+export const plusMenuListMd = async (ctx, next) => {
+
+  const { menuId } = ctx.params;
+  const { conn } = ctx.state;
+
+  const rows = await conn.query(
+    "SELECT * FROM plus_menu WHERE menu_id = ?",
+    [menuId]
+  )
+
+  ctx.state.body = {
+    count: rows.length,
+    results: rows
+  }
+  
+  await next();
+}
+
 export const menuList = [
   CommonMd.createConnectionMd,
   menuListMd,
   CommonMd.responseMd,
 ];
+
+export const plusMenuList = [
+  CommonMd.createConnectionMd,
+  menuListMd,
+  CommonMd.responseMd
+]

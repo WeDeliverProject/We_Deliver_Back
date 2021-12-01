@@ -15,7 +15,6 @@ export const readAllMd = async (ctx, next) => {
     "SELECT * FROM review"
   );
 
-
   for(let i=0; i<rows.length; i++) {
     const r = reviews.filter((review) => {
       if(review.restaurant_id === rows[i].id) return true;
@@ -39,8 +38,34 @@ export const readAllMd = async (ctx, next) => {
   await next();
 };
 
+export const restaurantOneMd = async (ctx, next) => {
+
+  const { conn } = ctx.state;
+  const { restaurantId } = ctx.params;
+
+  const row = await conn.query(
+    "SELECT r.name, r.delivery_cost, r.min_order_amount, r.payment, \
+    SUM(re.star_rating)/COUNT(re.id) FROM restaurant r \
+    JOIN review re ON re.restaurant_id = r.id \
+    WHERE r.id = ?",
+    [restaurantId]
+  )
+  
+  ctx.state.body = {
+    ...row[0]
+  }
+
+  await next();
+}
+
 export const readAll = [
   CommonMd.createConnectionMd,
   readAllMd,
+  CommonMd.responseMd
+]
+
+export const readOne = [
+  CommonMd.createConnectionMd,
+  restaurantOneMd,
   CommonMd.responseMd
 ]

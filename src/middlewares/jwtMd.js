@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import Boom from "@hapi/boom";
 import config from "../config";
 
 const jwtSecret = config.JWT_SECRET;
@@ -9,7 +10,7 @@ export const generateToken = (payload) => {
       payload,
       jwtSecret,
       {
-        expiresIn: "5m",
+        expiresIn: "2h",
       },
       (error, token) => {
         if (error) reject(error);
@@ -30,8 +31,15 @@ export const decodeToken = (token) => {
 
 const jwtMd = async (ctx, next) => {
   const access_token = ctx.headers.authorization;
+  console.log(ctx.path)
 
-  if (!access_token) return next();
+  if (!access_token) {
+    if(ctx.path == "/api/v1/members/login") {
+      return next();
+    } else {
+      throw Boom.unauthorized("토큰이 존재하지 않습니다.");
+    }
+  }
 
   try {
     const decoded = await decodeToken(token);

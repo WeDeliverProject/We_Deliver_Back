@@ -34,8 +34,8 @@ const main = async () => {
 
     // 데이터베이스 Pool을 Koa Context에 저장한다.
     app.context.dbPool = pool;
-
     app.use(errorHandleMd);
+    app.use(jwtMd);
     app.use(Router.routes()).use(Router.allowedMethods());
     app.use(serve(path.join(__dirname, "../upload")));
     server.listen(3000);

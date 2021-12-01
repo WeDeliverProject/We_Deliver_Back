@@ -40,12 +40,12 @@ export const saveReviewMd = async(ctx, next) => {
 }
 
 export const listByRestaurantMd = async (ctx, next) => {
-  
+
   const { conn } = ctx.state;
   const { restaurantId } = ctx.params;
 
   const rows = await conn.query(
-    "SELECT r.contents, m.user_id, r.star_rating, r.member_id, r.image  FROM review r \
+    "SELECT r.contents, m.user_id, r.star_rating, r.member_id, r.image, FROM review r \
     JOIN member m ON m.id = r.member_id \
     WHERE r.restaurant_id = ?",
     [restaurantId]
@@ -63,11 +63,14 @@ export const listByRestaurantMd = async (ctx, next) => {
     const o = orders.filter((order) => {
       if(order.member_id === rows[i].member_id) return true;
     });
-    
+
     rows[i].orders = o;
   }
 
   ctx.state.body = { 
+    review: [
+      
+    ],
     count: rows.length,
     results : rows
   }
