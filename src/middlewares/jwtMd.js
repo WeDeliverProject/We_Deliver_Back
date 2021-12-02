@@ -23,7 +23,7 @@ export const generateToken = (payload) => {
 export const decodeToken = (token) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, jwtSecret, (error, decoded) => {
-      if (error) reject(error);
+      if (error) reject(error)
       resolve(decoded);
     });
   });
@@ -31,10 +31,9 @@ export const decodeToken = (token) => {
 
 const jwtMd = async (ctx, next) => {
   const access_token = ctx.headers.authorization;
-  console.log(ctx.path)
 
   if (!access_token) {
-    if(ctx.path == "/api/v1/members/login") {
+    if(ctx.path.match('/api/v1/members/\*/')) {
       return next();
     } else {
       throw Boom.unauthorized("토큰이 존재하지 않습니다.");
@@ -43,11 +42,11 @@ const jwtMd = async (ctx, next) => {
 
   try {
     const decoded = await decodeToken(token);
+    const {id, nickname} = decoded;
 
     if (Date.now() / 1000 - decoded.iat > 60 * 60 * 24) {
       // 하루가 지나면 갱신해준다.
-      const { id, name } = decoded;
-      const freshToken = await generateToken({ id, name });
+      const freshToken = await generateToken({ id, nickname });
       ctx.state.body = {
         ...ctx.state.body,
         access_token: freshToken,
@@ -55,7 +54,7 @@ const jwtMd = async (ctx, next) => {
     }
     ctx.state.user = decoded;
   } catch (err) {
-    ctx.state.user = null;
+    throw Boom.unauthorized("유효하지 않는 토큰입니다.")
   }
   await next();
 };

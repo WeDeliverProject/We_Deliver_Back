@@ -5,6 +5,7 @@ import restaurants from "./restaurants";
 import reviews from "./reviews";
 import menu from "./menu";
 import informations from "./informations";
+import { jwtMd } from "./middlewares";
 
 const router = new Router({
   prefix: "/api/v1",

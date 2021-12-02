@@ -1,11 +1,7 @@
 import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
 import * as CommonMd from "../middlewares";
-<<<<<<< HEAD
-=======
 import { generateToken, decodeToken } from "../../middlewares/jwtMd";
-import fs from "fs";
-import path from "path";
 
 export const getDataFromBodyMd = async (ctx, next) => {
   const { userId, password, nickname } = ctx.request.body;
@@ -58,7 +54,7 @@ export const saveMemberMd = async (ctx, next) => {
   await next();
 };
 
-export const queryMemberMdByEmail = async (ctx, next) => {
+export const queryMemberMdById = async (ctx, next) => {
   const { userId } = ctx.state.reqBody;
   const { conn } = ctx.state;
 
@@ -67,7 +63,9 @@ export const queryMemberMdByEmail = async (ctx, next) => {
     [userId]
   );
 
-  ctx.state.body = rows[0];
+  if (rows.length === 0) {
+    throw Boom.badRequest("Bad Request")
+  }
 
   await next();
 };
@@ -95,22 +93,23 @@ export const loginMd = async (ctx, next) => {
   if (row.length === 0) {
     throw Boom.badRequest("로그인 실패");
   }
+  
+  const token = await generateToken({...row[0]})
 
   ctx.state.body={
-    ...row[0]
+    accessToken: token
   }
 
   await next();
 }
 
-// eslint-disable-next-line max-len
 export const create = [
   CommonMd.createConnectionMd,
   getDataFromBodyMd,
   validateDataMd,
   isDuplicatedEmailMd,
   saveMemberMd,
-  queryMemberMdByEmail,
+  queryMemberMdById,
   CommonMd.responseMd,
 ];
 
@@ -120,4 +119,3 @@ export const login = [
   loginMd,
   CommonMd.responseMd,
 ];
->>>>>>> 5078ddcd2f92b9b225e0ee2da16087c36151533a

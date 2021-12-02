@@ -8,21 +8,7 @@ import path from "path";
 export const createOrderMd = async (ctx, next) => {
   
   const { conn } = ctx.state;
-<<<<<<< HEAD
   const results = ctx.request.body;
-=======
-  const { result } = ctx.request.body;
-
-  console.log(ctx.request.body);
-
-  // menu
-  // [
-  //    {
-  //        "menu_id" : 1
-  //        "count" : 2
-  //    }
-  // ]
->>>>>>> 5078ddcd2f92b9b225e0ee2da16087c36151533a
 
 
   conn.query(
