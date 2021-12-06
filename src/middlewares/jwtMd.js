@@ -31,22 +31,24 @@ export const decodeToken = (token) => {
 
 const jwtMd = async (ctx, next) => {
   const access_token = ctx.headers.authorization;
-
+  
+  if(ctx.path.match('/api/v1/members/\*/')) {
+    return next();
+  } else if(ctx.path.match('/api/v1/images')) {
+    return next();
+  } 
+  
   if (!access_token) {
-    if(ctx.path.match('/api/v1/members/\*/')) {
-      return next();
-    } else {
-      throw Boom.unauthorized("토큰이 존재하지 않습니다.");
-    }
+    throw Boom.unauthorized("토큰이 존재하지 않습니다.");
   }
 
   try {
-    const decoded = await decodeToken(token);
-    const {id, nickname} = decoded;
+    const decoded = await decodeToken(access_token);
+    const {_id, nickname} = decoded;
 
     if (Date.now() / 1000 - decoded.iat > 60 * 60 * 24) {
       // 하루가 지나면 갱신해준다.
-      const freshToken = await generateToken({ id, nickname });
+      const freshToken = await generateToken({ _id, nickname });
       ctx.state.body = {
         ...ctx.state.body,
         access_token: freshToken,

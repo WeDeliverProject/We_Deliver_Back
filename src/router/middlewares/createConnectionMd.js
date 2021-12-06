@@ -1,7 +1,8 @@
 const createConnectionMd = async (ctx, next) => {
-  const { dbPool } = ctx;
-  const conn = await dbPool.getConnection();
-  ctx.state.conn = conn;
+  const { dbClient } = ctx;
+  await dbClient.connect();
+  const db = dbClient.db('myProject');
+  ctx.state.conn = db;
 
   await next();
 };

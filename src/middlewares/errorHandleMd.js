@@ -17,8 +17,8 @@ const errorHandleMd = async (ctx, next) => {
       };
     }
   } finally {
-    if (ctx.state.conn) {
-      ctx.state.conn.release();
+    if (ctx.state.dbClient) {
+      ctx.state.dbClient.close();
     }
   }
 };

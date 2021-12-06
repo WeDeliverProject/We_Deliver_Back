@@ -5,28 +5,22 @@ import { generateToken, decodeToken } from "../../middlewares/jwtMd";
 
 export const readAllMd = async (ctx, next) => {
   const { category } = ctx.params;
-  const { conn } = ctx.state;
-
-  const rows = await conn.query(
-    "SELECT * FROM restaurant r WHERE category = ?",[category]
-  );
-
-  const reviews = await conn.query(
-    "SELECT * FROM review"
-  );
+  const { collection } = ctx.state;
+  
+  const rows = await collection.find(
+    {category: category}
+  ).toArray();
 
   for(let i=0; i<rows.length; i++) {
-    const r = reviews.filter((review) => {
-      if(review.restaurant_id === rows[i].id) return true;
-    });
-    let sum = 0;
-    for(let j = 0; j<r.length; j++) {
-      console.log(r[j].star_rating);
-      sum += r[j].star_rating;
-    }
-    let star = sum / r.length;
     
-    rows[i].reviewCount = r.length;
+    const reviews = rows[i].reviews;
+    let sum = 0;
+    for(let j = 0; j<reviews.length; j++) {
+      sum += reviews[j].star_rating;
+    }
+    let star = sum / reviews.length;
+    
+    rows[i].reviewCount = reviews.length;
     rows[i].star = star;
   }
 
@@ -40,32 +34,46 @@ export const readAllMd = async (ctx, next) => {
 
 export const restaurantOneMd = async (ctx, next) => {
 
-  const { conn } = ctx.state;
+  const { collection } = ctx.state;
   const { restaurantId } = ctx.params;
 
-  const row = await conn.query(
-    "SELECT r.name, r.delivery_cost, r.min_order_amount, r.payment, \
-    SUM(re.star_rating)/COUNT(re.id) FROM restaurant r \
-    JOIN review re ON re.restaurant_id = r.id \
-    WHERE r.id = ?",
-    [restaurantId]
-  )
+  const rows = await collection.find({_id: restaurantId}).toArray();
+
+  const reviews = rows[0].reviews;
+  let sum = 0;
+  for(let i = 0; i<reviews.length; i++) {
+    sum += reviews[i].star_rating;
+  }
+  let star = sum / reviews.length;
+  
+  rows[0].reviewCount = reviews.length;
+  rows[0].star = star;
   
   ctx.state.body = {
-    ...row[0]
+    ...rows[0]
   }
+
+  await next();
+}
+
+export const createCollectionMd = async (ctx, next) => {
+  const {conn} = ctx.state;
+  const collection = conn.collection('restaurant');
+  ctx.state.collection = collection;
 
   await next();
 }
 
 export const readAll = [
   CommonMd.createConnectionMd,
+  createCollectionMd,
   readAllMd,
   CommonMd.responseMd
 ]
 
 export const readOne = [
   CommonMd.createConnectionMd,
+  createCollectionMd,
   restaurantOneMd,
   CommonMd.responseMd
 ]

@@ -1,13 +1,13 @@
 const responseMd = async (ctx) => {
-  const { body, conn } = ctx.state;
+  const { body } = ctx.state;
+  const { dbClient } = ctx;
 
   ctx.state = 200;
 
   ctx.body = body;
 
-  if (conn) {
-    conn.release();
-  }
+  dbClient.close();
+
 };
 
 export default responseMd;
