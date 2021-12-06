@@ -3,17 +3,6 @@
 POST {{BASE_URL}}/orders/
 Content-Type: application/json
 
-[
-    {
-        "menu_id" : 1,
-        "count" : 2
-    },
-    {
-        "menu_id" : 1,
-        "count" : 3,
-    }
-]
-
 GET {{BASE_URL}}/members?skip=0&limit=4
 
 GET {{BASE_URL}}/members

@@ -8,13 +8,10 @@ import path from "path";
 export const createOrderMd = async (ctx, next) => {
   
   const { conn } = ctx.state;
-  const results = ctx.request.body;
+  const result = ctx.request.body;
 
-
-  conn.query(
-    "INSERT INTO "
-  )
-
+  console.log(result);
+  
   await next();
 };
 

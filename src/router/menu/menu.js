@@ -8,12 +8,12 @@ export const menuListMd = async (ctx, next) => {
   const { collection } = ctx.state;
 
   const rows = await collection.find(
-    {restaurantId : restaurantId}
+    {_id : Number(restaurantId)},{projection:{"menu":1, _id:0}}
   ).toArray();
 
   ctx.state.body= {
     count: rows.length,
-    results: rows
+    results: rows[0].menu
   }
   await next();
 };
@@ -21,16 +21,16 @@ export const menuListMd = async (ctx, next) => {
 export const plusMenuListMd = async (ctx, next) => {
 
   const { menuId } = ctx.params;
-  const { conn } = ctx.state;
+  const { collection } = ctx.state;
 
-  const rows = await conn.query(
-    "SELECT * FROM plus_menu WHERE menu_id = ?",
-    [menuId]
-  )
+  console.log(menuId)
+  const rows = await collection.find(
+    {"menu.id": Number(menuId)}, {projection:{"menu.plus_menu": 1, _id:0}}
+  ).toArray();
 
   ctx.state.body = {
     count: rows.length,
-    results: rows
+    results: rows[0].menu[0].plus_menu
   }
   
   await next();
@@ -38,7 +38,7 @@ export const plusMenuListMd = async (ctx, next) => {
 
 export const createCollectionMd = async (ctx, next) => {
   const { conn } = ctx.state;
-  const collection = conn.collection('menu');
+  const collection = conn.collection('restaurant');
   ctx.state.collection = collection;
 
   await next();
@@ -54,6 +54,6 @@ export const menuList = [
 export const plusMenuList = [
   CommonMd.createConnectionMd,
   createCollectionMd,
-  menuListMd,
+  plusMenuListMd,
   CommonMd.responseMd
 ]
