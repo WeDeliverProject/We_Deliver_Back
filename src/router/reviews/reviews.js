@@ -44,6 +44,7 @@ export const createCollectionMd = async (ctx, next) => {
 
 // eslint-disable-next-line max-len
 export const create = [
+  CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   createCollectionMd,
   saveReviewMd,
@@ -51,6 +52,7 @@ export const create = [
 ];
 
 export const listByRestaurant = [
+  CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   createCollectionMd,
   listByRestaurantMd,

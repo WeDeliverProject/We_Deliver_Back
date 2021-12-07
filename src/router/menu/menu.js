@@ -1,7 +1,6 @@
 import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
 import * as CommonMd from "../middlewares";
-import { generateToken, decodeToken } from "../../middlewares/jwtMd";
 
 export const menuListMd = async (ctx, next) => {
   const { restaurantId } = ctx.params;
@@ -45,6 +44,7 @@ export const createCollectionMd = async (ctx, next) => {
 }
 
 export const menuList = [
+  CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   createCollectionMd,
   menuListMd,
@@ -52,6 +52,7 @@ export const menuList = [
 ];
 
 export const plusMenuList = [
+  CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   createCollectionMd,
   menuListMd,

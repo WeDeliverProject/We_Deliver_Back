@@ -19,6 +19,7 @@ export const readInfoMd = async(ctx, next) => {
 }
 
 export const readInfo = [
+  CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   readInfoMd,
   CommonMd.responseMd

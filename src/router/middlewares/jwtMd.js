@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import Boom from "@hapi/boom";
-import config from "../config";
+import config from "../../config";
 
 const jwtSecret = config.JWT_SECRET;
 
@@ -32,16 +32,6 @@ export const decodeToken = (token) => {
 const jwtMd = async (ctx, next) => {
   const access_token = ctx.headers.authorization;
   
-  if(ctx.path.match('/api/v1/members/\*/')) {
-    return next();
-  } else if(ctx.path.match('/api/v1/images')) {
-    return next();
-  } 
-  
-  if (!access_token) {
-    throw Boom.unauthorized("토큰이 존재하지 않습니다.");
-  }
-
   try {
     const decoded = await decodeToken(access_token);
     const {_id, nickname} = decoded;
@@ -56,7 +46,11 @@ const jwtMd = async (ctx, next) => {
     }
     ctx.state.user = decoded;
   } catch (err) {
-    throw Boom.unauthorized("유효하지 않는 토큰입니다.")
+    if (!access_token) {
+      throw Boom.unauthorized("토큰이 존재하지 않습니다.");
+    } else {
+      throw Boom.unauthorized("유효하지 않는 토큰입니다.");
+    }
   }
   await next();
 };

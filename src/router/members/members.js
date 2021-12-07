@@ -1,7 +1,7 @@
 import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
 import * as CommonMd from "../middlewares";
-import { generateToken, decodeToken } from "../../middlewares/jwtMd";
+import { generateToken, decodeToken } from "../middlewares/jwtMd";
 import crypto from 'crypto';
 
 export const getDataFromBodyMd = async (ctx, next) => {
@@ -33,7 +33,7 @@ export const isDuplicatedUserIdMd = async (ctx, next) => {
   const rows = await collection.find({user_id: userId}).toArray();
 
   if (rows.length > 0) {
-    throw Boom.badRequest("duplicated email");
+    throw Boom.badRequest("duplicated id");
   }
 
   ctx.state.collection = collection;

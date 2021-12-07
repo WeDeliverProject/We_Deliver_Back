@@ -1,7 +1,6 @@
 import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
 import * as CommonMd from "../middlewares";
-import { generateToken, decodeToken } from "../../middlewares/jwtMd";
 
 export const readAllMd = async (ctx, next) => {
   const { category } = ctx.params;
@@ -65,6 +64,7 @@ export const createCollectionMd = async (ctx, next) => {
 }
 
 export const readAll = [
+  CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   createCollectionMd,
   readAllMd,
@@ -72,6 +72,7 @@ export const readAll = [
 ]
 
 export const readOne = [
+  CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   createCollectionMd,
   restaurantOneMd,
