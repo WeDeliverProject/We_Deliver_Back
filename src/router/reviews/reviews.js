@@ -23,12 +23,12 @@ export const listByRestaurantMd = async (ctx, next) => {
   const { restaurantId } = ctx.params;
 
   const rows = await collection.find(
-    {_id: restaurantId}, {projection:{reviews: 1, _id:0}}
+    {_id: Number(restaurantId)}, {projection:{reviews: 1, _id:0}}
   ).toArray();
 
   ctx.state.body = { 
-    count: rows.length,
-    ...rows[0]
+    count: rows[0].reviews.length,
+    ...rows[0].reviews
   }
 
   await next();

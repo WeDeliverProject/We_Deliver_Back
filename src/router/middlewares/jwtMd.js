@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
 import Boom from "@hapi/boom";
-import config from "../../config";
+import dotenv from "dotenv";
 
-const jwtSecret = config.JWT_SECRET;
+dotenv.config()
+
+const jwtSecret = process.env.JWT_SECRET;
 
 export const generateToken = (payload) => {
   return new Promise((resolve, reject) => {
@@ -52,6 +54,7 @@ const jwtMd = async (ctx, next) => {
       throw Boom.unauthorized("유효하지 않는 토큰입니다.");
     }
   }
+
   await next();
 };
 

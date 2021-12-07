@@ -7,7 +7,7 @@ export const readAllMd = async (ctx, next) => {
   const { collection } = ctx.state;
   
   const rows = await collection.find(
-    {category: category}
+    {category: category},{projection:{menu:0}}
   ).toArray();
 
   for(let i=0; i<rows.length; i++) {
@@ -21,6 +21,7 @@ export const readAllMd = async (ctx, next) => {
     
     rows[i].reviewCount = reviews.length;
     rows[i].star = star;
+    delete rows[i].reviews;
   }
 
   ctx.state.body = {
@@ -36,7 +37,9 @@ export const restaurantOneMd = async (ctx, next) => {
   const { collection } = ctx.state;
   const { restaurantId } = ctx.params;
 
-  const rows = await collection.find({_id: restaurantId}).toArray();
+  const rows = await collection.find(
+      {_id: Number(restaurantId)},{projection:{menu:0}}
+    ).toArray();
 
   const reviews = rows[0].reviews;
   let sum = 0;
@@ -47,7 +50,9 @@ export const restaurantOneMd = async (ctx, next) => {
   
   rows[0].reviewCount = reviews.length;
   rows[0].star = star;
-  
+
+  delete rows[0].reviews
+
   ctx.state.body = {
     ...rows[0]
   }
