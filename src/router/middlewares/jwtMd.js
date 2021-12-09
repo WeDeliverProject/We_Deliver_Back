@@ -32,9 +32,9 @@ export const decodeToken = (token) => {
 }
 
 const jwtMd = async (ctx, next) => {
-  const access_token = ctx.headers.authorization;
-  
+  const token = ctx.headers.authorization;
   try {
+    const access_token = token.split(' ')[1];
     const decoded = await decodeToken(access_token);
     const {_id, nickname} = decoded;
 
@@ -48,7 +48,7 @@ const jwtMd = async (ctx, next) => {
     }
     ctx.state.user = decoded;
   } catch (err) {
-    if (!access_token) {
+    if (!token) {
       throw Boom.unauthorized("토큰이 존재하지 않습니다.");
     } else {
       throw Boom.unauthorized("유효하지 않는 토큰입니다.");

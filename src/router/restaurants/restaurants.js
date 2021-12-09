@@ -5,7 +5,7 @@ import * as CommonMd from "../middlewares";
 export const readAllMd = async (ctx, next) => {
   const { category } = ctx.params;
   const { collection } = ctx.state;
-  
+
   const rows = await collection.find(
     {category: category},{projection:{menu:0}}
   ).toArray();
