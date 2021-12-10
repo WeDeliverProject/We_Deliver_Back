@@ -1,6 +1,7 @@
 @BASE_URL=http://localhost:3000/api/v1
 
-GET {{BASE_URL}}/restaurants/korean
+GET {{BASE_URL}}/restaurants/category/korean
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJkZTE2NDQwNC1jMGVkLTRjYTAtYjA1Ni00NGFmYjMyMGU4OWMiLCJuaWNrbmFtZSI6ImpkeWoxMjM0IiwiaWF0IjoxNjM5MTE2NTYyLCJleHAiOjE2MzkxMjM3NjJ9.9iN94GeU2Gl7lKTp7O-ecCzU4FLNiFeQGo0CFmRawiU
 
 GET {{BASE_URL}}/members?skip=0&limit=4
 

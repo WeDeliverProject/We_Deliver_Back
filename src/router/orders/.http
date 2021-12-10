@@ -3,6 +3,15 @@
 POST {{BASE_URL}}/orders/
 Content-Type: application/json
 
-GET {{BASE_URL}}/members?skip=0&limit=4
+POST {{BASE_URL}}/orders/joint
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJkZTE2NDQwNC1jMGVkLTRjYTAtYjA1Ni00NGFmYjMyMGU4OWMiLCJuaWNrbmFtZSI6ImpkeWoxMjM0IiwiaWF0IjoxNjM5MTE2NTYyLCJleHAiOjE2MzkxMjM3NjJ9.9iN94GeU2Gl7lKTp7O-ecCzU4FLNiFeQGo0CFmRawiU
 
-GET {{BASE_URL}}/members
+{
+    "restaurant": 1,
+    "price": 2000,
+    "name": "한양식당"
+}
+
+
+GET {{BASE_URL}}/orders/joint
