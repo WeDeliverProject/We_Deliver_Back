@@ -90,14 +90,16 @@ export const createDataMd = async (ctx, next) => {
                 "name": "돈삼겹고기만",
                 "price": 7000,
                 "img": "돈삼겹고기만.jpg",
-                "category": "인기 메뉴"
+                "category": "인기 메뉴",
+                "addition":[],
             },
             {
                 "id": 2,
                 "name": "돈삼겹곱빼기",
                 "price": 9000,
                 "img": "돈삼겹곱빼기.jpg",
-                "category": "인기 메뉴"
+                "category": "인기 메뉴",
+                "addition":[],
             },
             {
                 "id": 3,
@@ -105,6 +107,7 @@ export const createDataMd = async (ctx, next) => {
                 "price": 8000,
                 "img": "도시락세트.jpg",
                 "category": "인기 메뉴",
+                "addition":[],
             },
             {
                 "id": 4,
@@ -112,6 +115,7 @@ export const createDataMd = async (ctx, next) => {
                 "price": 10500,
                 "img": "돈양념삼겹.jpg",
                 "category": "인기 메뉴",
+                "addition":[],
             }
         ],
         "reviews": [],
@@ -131,14 +135,16 @@ export const createDataMd = async (ctx, next) => {
               "name": "제육볶음",
               "price": 7000,
               "img": "제육.jpg",
-              "category": "인기 메뉴"
+              "category": "인기 메뉴",
+              "addition":[],
           },
           {
               "id": 2,
               "name": "오징어볶음",
               "price": 9000,
               "img": "오징어.jpg",
-              "category": "인기 메뉴"
+              "category": "인기 메뉴",
+              "addition":[],
           },
           {
               "id": 3,
@@ -146,6 +152,7 @@ export const createDataMd = async (ctx, next) => {
               "price": 7000,
               "img": "김치찌개.jpg",
               "category": "인기 메뉴",
+              "addition":[],
           }
       ],
       "reviews": [],
