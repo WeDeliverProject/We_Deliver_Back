@@ -16,7 +16,7 @@ export const createJointMd = async (ctx, next) => {
   const { collection } = ctx.state;
   const { restaurantId, price, name } = ctx.request.body;
 
-  const query = { 'name': name } 
+  const query = { 'name': name }
 
   const option = { upsert: true };
 

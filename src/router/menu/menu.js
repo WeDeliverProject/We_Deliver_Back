@@ -45,14 +45,13 @@ export const plusMenuListMd = async (ctx, next) => {
   const { menuId } = ctx.params;
   const { collection } = ctx.state;
 
-  console.log(menuId)
   const rows = await collection.find(
-    {"menu.id": Number(menuId)}, {projection:{"menu.addition": 1, _id:0}}
+    {"_id": Number(menuId)}, {projection:{"addition": 1, _id:0}}
   ).toArray();
 
   ctx.state.body = {
-    count: rows[0].menu[0].addition.length,
-    results: rows[0].menu[0].addition
+    count: rows[0].addition.length,
+    results: rows[0].addition
   }
   
   await next();

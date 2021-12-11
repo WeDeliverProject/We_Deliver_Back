@@ -5,7 +5,8 @@
         "price": 7000,
         "img": "제육.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 1
+        "restaurant_id": 1,
+        "addition": []
     },
     {
         "_id": 2,
@@ -13,7 +14,8 @@
         "price": 9000,
         "img": "오징어.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 1
+        "restaurant_id": 1,
+        "addition": []
     },
     {
         "_id": 3,
@@ -21,7 +23,8 @@
         "price": 7000,
         "img": "김치찌개.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 1
+        "restaurant_id": 1,
+        "addition": []
     },
     {
         "_id": 4,
@@ -29,7 +32,8 @@
         "price": 7000,
         "img": "돈삼겹고기만.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 2
+        "restaurant_id": 2,
+        "addition": []
     },
     {
         "_id": 5,
@@ -37,7 +41,8 @@
         "price": 9000,
         "img": "돈삼겹곱빼기.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 2
+        "restaurant_id": 2,
+        "addition": []
     },
     {
         "_id": 6,
@@ -45,7 +50,8 @@
         "price": 8000,
         "img": "도시락세트.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 2
+        "restaurant_id": 2,
+        "addition": []
     },
     {
         "_id": 7,
@@ -53,7 +59,8 @@
         "price": 10500,
         "img": "돈양념삼겹.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 2
+        "restaurant_id": 2,
+        "addition": []
     },
     {
         "_id": 8,
@@ -61,7 +68,8 @@
         "price": 23000,
         "img": "닭한마리.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 9,
@@ -69,7 +77,8 @@
         "price": 33000,
         "img": "능이닭한마리.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 10,
@@ -77,7 +86,8 @@
         "price": 34000,
         "img": "닭한마리반.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 11,
@@ -85,7 +95,8 @@
         "price": 48000,
         "img": "능이닭한마리반.jpg",
         "category": "인기 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 12,
@@ -93,7 +104,8 @@
         "price": 2000,
         "img": "칼국수.jpg",
         "category": "사이드 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 13,
@@ -101,7 +113,8 @@
         "price": 2000,
         "img": "능이닭한마리반.jpg",
         "category": "사이드 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 14,
@@ -109,7 +122,8 @@
         "price": 2000,
         "img": "칼국수.jpg",
         "category": "사이드 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 15,
@@ -117,7 +131,8 @@
         "price": 2000,
         "img": "능이닭한마리반.jpg",
         "category": "사이드 메뉴",
-        "restaurant_id": 3
+        "restaurant_id": 3,
+        "addition": []
     },
     {
         "_id": 16,
@@ -125,7 +140,8 @@
         "price": 15000,
         "img": "2인짜국세트.jpg",
         "category": "2인 세트",
-        "restaurant_id": 3
+        "restaurant_id": 4,
+        "addition": []
     },
     {
         "_id": 17,
@@ -133,7 +149,8 @@
         "price": 16000,
         "img": "2인우국세트.jpg",
         "category": "2인 세트",
-        "restaurant_id": 3
+        "restaurant_id": 4,
+        "addition": []
     },
     {
         "_id": 18,
@@ -141,7 +158,8 @@
         "price": 15500,
         "img": "2인제육팬세트.jpg",
         "category": "2인 세트",
-        "restaurant_id": 3
+        "restaurant_id": 4,
+        "addition": []
     },
     {
         "_id": 19,
@@ -149,6 +167,514 @@
         "price": 16500,
         "img": "2인오삼팬세트.jpg",
         "category": "2인 세트",
-        "restaurant_id": 3
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 20,
+        "name": "2인 제육순세트",
+        "price": 16000,
+        "img": "2인제육순세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 21,
+        "name": "2인 우삼순세트",
+        "price": 16500,
+        "img": "2인제육팬세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 22,
+        "name": "2인 짜순 세트",
+        "price": 15000,
+        "img": "2인오삼팬세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 23,
+        "name": "2인 참순 세트",
+        "price": 15000,
+        "img": "2인우국세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 24,
+        "name": "된장뚝배기",
+        "price": 6300,
+        "img": "된장뚝배기.jpg",
+        "category": "비벼먹는 뚝배기",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 25,
+        "name": "멸치된장뚝배기",
+        "price": 6800,
+        "img": "멸치된장뚝배기.jpg",
+        "category": "비벼먹는 뚝배기",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 26,
+        "name": "우거지된장뚝배기",
+        "price": 7300,
+        "img": "우거지된장뚝배기.jpg",
+        "category": "비벼먹는 뚝배기",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 27,
+        "name": "우렁삼겹된장뚝배기",
+        "price": 7800,
+        "img": "우렁삼겹된장뚝배기.jpg",
+        "category": "비벼먹는 뚝배기",
+        "restaurant_id": 4,
+        "addition": []
+    },
+    {
+        "_id": 28,
+        "name": "1인분 떡볶이",
+        "price": 8900,
+        "img": "(두끼)1인분떡볶이.jpg",
+        "category": "(인기) 1인 메뉴",
+        "restaurant_id": 5,
+        "addition": [
+            {
+                "name": "기본 (밀떡)",
+                "price": 0,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "쌀떡만 구성",
+                "price": 2500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "밀떡/쌀떡 반반",
+                "price": 1500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "마늘소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "두끼소스 (보통맛)",
+                "price": 0,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "로제소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "떡모소스 (중간맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "동대문 소스 (매운맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            }
+        ]
+    },
+    {
+        "_id": 29,
+        "name": "1인분 떡볶이+컵밥 세트",
+        "price": 11000,
+        "img": "(두끼)1인분 떡볶이+컵밥 세트.jpg",
+        "category": "(인기) 1인 메뉴",
+        "restaurant_id": 5,
+        "addition": [
+            {
+                "name": "기본 (밀떡)",
+                "price": 0,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "쌀떡만 구성",
+                "price": 2500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "밀떡/쌀떡 반반",
+                "price": 1500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "마늘소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "두끼소스 (보통맛)",
+                "price": 0,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "로제소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "떡모소스 (중간맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "동대문 소스 (매운맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            }
+        ]
+    },
+    {
+        "_id": 30,
+        "name": "1인분 치킨 (300g)",
+        "price": 8900,
+        "img": "1인분치킨.jpg",
+        "category": "(인기) 1인 메뉴",
+        "restaurant_id": 5,
+        "addition": [
+            {
+                "name": "후라이드 (순살)",
+                "price": 0,
+                "category": "치킨 맛 선택 (순살)"
+            },
+            {
+                "name": "양념 (순살)",
+                "price": 1000,
+                "category": "치킨 맛 선택 (순살)"
+            },
+            {
+                "name": "허니간장 (순살)",
+                "price": 1000,
+                "category": "치킨 맛 선택 (순살)"
+            },
+            {
+                "name": "버터갈릭 (순살)",
+                "price": 1000,
+                "category": "치킨 맛 선택 (순살)"
+            },
+            {
+                "name": "반반 (순살)",
+                "price": 1500,
+                "category": "치킨 맛 선택 (순살)"
+            }
+        ]
+    },
+    {
+        "_id": 31,
+        "name": "떡/튀세트",
+        "price": 16500,
+        "img": "(두끼)떡/튀세트.jpg",
+        "category": "두끼 푸짐 세트",
+        "restaurant_id": 5,
+        "addition": [
+            {
+                "name": "기본 (밀떡)",
+                "price": 0,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "쌀떡만 구성",
+                "price": 2500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "밀떡/쌀떡 반반",
+                "price": 1500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "마늘소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "두끼소스 (보통맛)",
+                "price": 0,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "로제소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "떡모소스 (중간맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "동대문 소스 (매운맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            }
+        ]
+    },
+    {
+        "_id": 32,
+        "name": "떡/튀/순 세트",
+        "price": 19500,
+        "img": "(두끼)떡/튀/순 세트.jpg",
+        "category": "두끼 푸짐 세트",
+        "restaurant_id": 5,
+        "addition": [
+            {
+                "name": "기본 (밀떡)",
+                "price": 0,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "쌀떡만 구성",
+                "price": 2500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "밀떡/쌀떡 반반",
+                "price": 1500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "마늘소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "두끼소스 (보통맛)",
+                "price": 0,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "로제소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "떡모소스 (중간맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "동대문 소스 (매운맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            }
+        ]
+    },
+    {
+        "_id": 33,
+        "name": "떡/튀/순/오 세트",
+        "price": 8900,
+        "img": "(두까)떡/튀/순/오세트.jpg",
+        "category": "두끼 푸짐 세트",
+        "restaurant_id": 5,
+        "addition": [
+            {
+                "name": "기본 (밀떡)",
+                "price": 0,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "쌀떡만 구성",
+                "price": 2500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "밀떡/쌀떡 반반",
+                "price": 1500,
+                "category": "떡 종류 선택"
+            },
+            {
+                "name": "마늘소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "두끼소스 (보통맛)",
+                "price": 0,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "로제소스 (매콤)",
+                "price": 1000,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "떡모소스 (중간맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            },
+            {
+                "name": "동대문 소스 (매운맛)",
+                "price": 500,
+                "category": "떡볶이 맛 선택"
+            }
+        ]
+    },
+    {
+        "_id": 34,
+        "name": "2인 떡볶이",
+        "price": 9000,
+        "img": "(옆집)2인 떡볶이.jpg",
+        "category": "메인 메뉴",
+        "restaurant_id": 6,
+        "addition": [
+            {
+                "name": "떡 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "오뎅 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "반반",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            }
+        ]
+    },
+    {
+        "_id": 35,
+        "name": "진짜 로제떡볶이",
+        "price": 12000,
+        "img": "(옆집)진짜 로제떡볶이.jpg",
+        "category": "메인 메뉴",
+        "restaurant_id": 6,
+        "addition": [
+            {
+                "name": "떡 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "오뎅 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "반반",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            }
+        ]
+    },
+    {
+        "_id": 36,
+        "name": "A SET",
+        "price": 15000,
+        "img": "(옆집)A SET.jpg",
+        "category": "세트 메뉴",
+        "restaurant_id": 6,
+        "addition": [
+            {
+                "name": "떡 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "오뎅 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "반반",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            }
+        ]
+    },
+    {
+        "_id": 37,
+        "name": "B SET",
+        "price": 18000,
+        "img": "(옆집)B SET.jpg",
+        "category": "세트 메뉴",
+        "restaurant_id": 6,
+        "addition": [
+            {
+                "name": "떡 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "오뎅 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "반반",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            }
+        ]
+    },
+    {
+        "_id": 38,
+        "name": "C SET",
+        "price": 20000,
+        "img": "(옆집)C SET.jpg",
+        "category": "세트 메뉴",
+        "restaurant_id": 6,
+        "addition": [
+            {
+                "name": "떡 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "오뎅 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "반반",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            }
+        ]
+    },
+    {
+        "_id": 39,
+        "name": "진짜 로제떡볶이",
+        "price": 12000,
+        "img": "(옆집)진짜 로제떡볶이.jpg",
+        "category": "메인 메뉴",
+        "restaurant_id": 6,
+        "addition": [
+            {
+                "name": "떡 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "오뎅 많이",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            },
+            {
+                "name": "반반",
+                "price": 0,
+                "category": "떡, 오뎅 비율 선택"
+            }
+        ]
     }
 ]
