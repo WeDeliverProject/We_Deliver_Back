@@ -108,11 +108,7 @@ export const createCollectionMd = async (ctx, next) => {
 
   const {conn} = ctx.state;
   const collection = conn.collection('member');
-  const restaurant = conn.collection('restaurant');
-  const order = conn.collection('order');
   ctx.state.collection = collection;
-  ctx.state.restaurant = restaurant;
-  ctx.state.order = order;
 
   await next();
 }
@@ -120,120 +116,6 @@ export const createCollectionMd = async (ctx, next) => {
 const hash = (password) => {
   return crypto.createHash('sha512').update(password).digest('base64');
 }
-
-
-export const createDataMd = async (ctx, next) => {
-
-  const { restaurant, order, conn } = ctx.state;
-
-  await conn.dropCollection("restaurant");
-  await conn.dropCollection("order");
-
-  await restaurant.insertMany([{
-        "_id": 2,
-        "name": "구어돈",
-        "img": "구어돈.jpg",
-        "category": "korean",
-        "lng": 37.62728367472624,
-        "lat": 127.07833462839024,
-        "min_order_amount": 10000,
-        "delivery_fee": 1500,
-        "menu": [
-            {
-                "id": 1,
-                "name": "돈삼겹고기만",
-                "price": 7000,
-                "img": "돈삼겹고기만.jpg",
-                "category": "인기 메뉴",
-                "addition":[],
-            },
-            {
-                "id": 2,
-                "name": "돈삼겹곱빼기",
-                "price": 9000,
-                "img": "돈삼겹곱빼기.jpg",
-                "category": "인기 메뉴",
-                "addition":[],
-            },
-            {
-                "id": 3,
-                "name": "도시락세트",
-                "price": 8000,
-                "img": "도시락세트.jpg",
-                "category": "인기 메뉴",
-                "addition":[],
-            },
-            {
-                "id": 4,
-                "name": "돈 양념삼겹",
-                "price": 10500,
-                "img": "돈양념삼겹.jpg",
-                "category": "인기 메뉴",
-                "addition":[],
-            }
-        ],
-        "reviews": [],
-    },
-    {
-      "_id": 1,
-      "name": "한양식당",
-      "img": "한양식당.jpg",
-      "category": "korean",
-      "lng": 37.62741336143698,
-      "lat": 127.07976212222471,
-      "min_order_amount": 15000,
-      "delivery_fee": 1500,
-      "menu": [
-          {
-              "id": 1,
-              "name": "제육볶음",
-              "price": 7000,
-              "img": "제육.jpg",
-              "category": "인기 메뉴",
-              "addition":[],
-          },
-          {
-              "id": 2,
-              "name": "오징어볶음",
-              "price": 9000,
-              "img": "오징어.jpg",
-              "category": "인기 메뉴",
-              "addition":[],
-          },
-          {
-              "id": 3,
-              "name": "김치찌개",
-              "price": 7000,
-              "img": "김치찌개.jpg",
-              "category": "인기 메뉴",
-              "addition":[],
-          }
-      ],
-      "reviews": [],
-  }]);
-
-  await order.insertMany([
-    {
-      "_id": 1,
-      "restaurant_id": 1,
-      "price": 1500,
-      "joint": 0
-  },
-  {
-        "_id": 2,
-        "restaurant_id": 1,
-        "price": 2000,
-        "joint": 0
-    },{
-      "_id": 3,
-      "restaurant_id": 2,
-      "price": 2000,
-      "joint": 1
-    }])
-
-  await next();
-}
-
 
 export const create = [
   CommonMd.createConnectionMd,
@@ -251,6 +133,5 @@ export const login = [
   createCollectionMd,
   loginValidateDataMd,
   loginMd,
-  createDataMd,
   CommonMd.responseMd,
 ];

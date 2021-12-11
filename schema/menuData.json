@@ -1,0 +1,154 @@
+[
+    {
+        "_id": 1,
+        "name": "제육볶음",
+        "price": 7000,
+        "img": "제육.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 1
+    },
+    {
+        "_id": 2,
+        "name": "오징어볶음",
+        "price": 9000,
+        "img": "오징어.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 1
+    },
+    {
+        "_id": 3,
+        "name": "김치찌개",
+        "price": 7000,
+        "img": "김치찌개.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 1
+    },
+    {
+        "_id": 4,
+        "name": "돈삼겹고기만",
+        "price": 7000,
+        "img": "돈삼겹고기만.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 2
+    },
+    {
+        "_id": 5,
+        "name": "돈삼겹곱빼기",
+        "price": 9000,
+        "img": "돈삼겹곱빼기.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 2
+    },
+    {
+        "_id": 6,
+        "name": "도시락세트",
+        "price": 8000,
+        "img": "도시락세트.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 2
+    },
+    {
+        "_id": 7,
+        "name": "돈 양념삼겹",
+        "price": 10500,
+        "img": "돈양념삼겹.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 2
+    },
+    {
+        "_id": 8,
+        "name": "닭한마리",
+        "price": 23000,
+        "img": "닭한마리.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 9,
+        "name": "능이 닭한마리",
+        "price": 33000,
+        "img": "능이닭한마리.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 10,
+        "name": "닭한마리 반",
+        "price": 34000,
+        "img": "닭한마리반.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 11,
+        "name": "능이 닭한마리 반",
+        "price": 48000,
+        "img": "능이닭한마리반.jpg",
+        "category": "인기 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 12,
+        "name": "칼국수",
+        "price": 2000,
+        "img": "칼국수.jpg",
+        "category": "사이드 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 13,
+        "name": "감자사리",
+        "price": 2000,
+        "img": "능이닭한마리반.jpg",
+        "category": "사이드 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 14,
+        "name": "떡사리",
+        "price": 2000,
+        "img": "칼국수.jpg",
+        "category": "사이드 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 15,
+        "name": "만두사리",
+        "price": 2000,
+        "img": "능이닭한마리반.jpg",
+        "category": "사이드 메뉴",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 16,
+        "name": "2인 짜국세트",
+        "price": 15000,
+        "img": "2인짜국세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 17,
+        "name": "2인 우국세트",
+        "price": 16000,
+        "img": "2인우국세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 18,
+        "name": "2인 제육팬세트",
+        "price": 15500,
+        "img": "2인제육팬세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 3
+    },
+    {
+        "_id": 19,
+        "name": "2인 오삼팬세트",
+        "price": 16500,
+        "img": "2인오삼팬세트.jpg",
+        "category": "2인 세트",
+        "restaurant_id": 3
+    }
+]

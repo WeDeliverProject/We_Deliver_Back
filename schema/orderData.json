@@ -1,0 +1,20 @@
+[
+    {
+        "_id": 1,
+        "restaurant_id": 1,
+        "price": 1500,
+        "joint": 1
+    },
+    {
+        "_id": 2,
+        "restaurant_id": 1,
+        "price": 2000,
+        "joint": 0
+    },
+    {
+        "_id": 3,
+        "restaurant_id": 2,
+        "price": 2000,
+        "joint": 1
+    }
+]

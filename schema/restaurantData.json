@@ -1,0 +1,202 @@
+[{
+    "_id": 1,
+    "name": "한양식당",
+    "img": "한양식당.jpg",
+    "category": "korean",
+    "lng": 37.62741336143698,
+    "lat": 127.07976212222471,
+    "min_order_amount": 15000,
+    "delivery_fee": 1500,
+    "reviews": []
+},
+{
+    "_id": 2,
+    "name": "구어돈",
+    "img": "구어돈.jpg",
+    "category": "korean",
+    "lng": 37.62728367472624,
+    "lat": 127.07833462839024,
+    "min_order_amount": 10000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 3,
+    "name": "공릉동 닭한마리",
+    "img": "공릉동닭한마리.jpg",
+    "category": "korean",
+    "lng": 37.62117282247424,
+    "lat": 127.07472047452218,
+    "min_order_amount": 20000,
+    "delivery_fee": 2000,
+    "reviews": []
+},{
+    "_id": 4,
+    "name": "사나이뚝배기",
+    "img": "사나이뚝배기.jpg",
+    "category": "korean",
+    "lng": 37.62941569891023, 
+    "lat": 127.07651863537043,
+    "min_order_amount": 10000,
+    "delivery_fee": 2000,
+    "reviews": []
+},{
+    "_id": 5,
+    "name": "두끼떡볶이",
+    "img": "두끼떡볶이.jpg",
+    "category": "snack",
+    "lng": 37.62712236049436, 
+    "lat": 127.07702322088385,
+    "min_order_amount": 20000,
+    "delivery_fee": 2000,
+    "reviews": []
+},{
+    "_id": 6,
+    "name": "옆집떡볶이",
+    "img": "옆집떡볶이.jpg",
+    "category": "snack",
+    "lng": 37.62915200243844, 
+    "lat": 127.07676192777154,
+    "min_order_amount": 20000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 7,
+    "name": "삐삐핵볶이",
+    "img": "삐삐핵볶이.jpg",
+    "category": "korean",
+    "lng": 37.629343572292576,
+    "lat": 127.07659219686295,
+    "min_order_amount": 15000,
+    "delivery_fee": 2000,
+    "reviews": []
+},{
+    "_id": 8,
+    "name": "배떡",
+    "img": "배떡.jpg",
+    "category": "snack",
+    "lng": 37.62748491106837,
+    "lat": 127.07717086221689,
+    "min_order_amount": 10000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 9,
+    "name": "중국집",
+    "img": "중국집.jpg",
+    "category": "chinese",
+    "lng": 37.62879614260397, 
+    "lat": 127.07671624799451,
+    "min_order_amount": 15000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 10,
+    "name": "복쓰부",
+    "img": "복쓰부.jpg",
+    "category": "chinese",
+    "lng": 37.6272923980172, 
+    "lat": 127.07876510981502,
+    "min_order_amount": 13000,
+    "delivery_fee": 2400,
+    "reviews": []
+},{
+    "_id": 11,
+    "name": "샹츠마라",
+    "img": "샹츠마라.jpg",
+    "category": "chinese",
+    "lng": 37.6293777693482, 
+    "lat": 127.07595783403605,
+    "min_order_amount": 8000,
+    "delivery_fee": 1000,
+    "reviews": []
+},{
+    "_id": 12,
+    "name": "왕짜장",
+    "img": "왕짜장.jpg",
+    "category": "chinese",
+    "lng": 37.627382893974776, 
+    "lat": 127.07816764110673,
+    "min_order_amount": 10000,
+    "delivery_fee": 1300,
+    "reviews": []
+},{
+    "_id": 13,
+    "name": "호치킨",
+    "img": "호치킨.jpg",
+    "category": "midnight",
+    "lng": 37.62735000156621, 
+    "lat": 127.07680538743038,
+    "min_order_amount": 14000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 14,
+    "name": "족발야시장",
+    "img": "족발야시장.jpg",
+    "category": "midnight",
+    "lng": 37.626551653898815,
+    "lat":  127.07481648345056,
+    "min_order_amount": 29000,
+    "delivery_fee": 1000,
+    "reviews": []
+},{
+    "_id": 15,
+    "name": "맛닭꼬",
+    "img": "맛닭꼬.jpg",
+    "category": "midnight",
+    "lng": 37.62741694666886,
+    "lat": 127.07776552437026,
+    "min_order_amount": 16000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 16,
+    "name": "오븐에빠진닭",
+    "img": "오븐에빠진닭.jpg",
+    "category": "midnight",
+    "lng": 37.62832497829036, 
+    "lat": 127.07732749592992,
+    "min_order_amount": 10000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 17,
+    "name": "신가쯔",
+    "img": "신가쯔.jpg",
+    "category": "japanese",
+    "lng": 37.62616630725222, 
+    "lat": 127.07855152066176,
+    "min_order_amount": 14000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 18,
+    "name": "스시쟁이",
+    "img": "스시쟁이.jpg",
+    "category": "japanese",
+    "lng": 37.62720476509048, 
+    "lat": 127.0784449955682,
+    "min_order_amount": 13000,
+    "delivery_fee": 2000,
+    "reviews": []
+},{
+    "_id": 19,
+    "name": "기린",
+    "img": "기린.jpg",
+    "category": "japanese",
+    "lng": 37.62807034207102, 
+    "lat": 127.0774914929893,
+    "min_order_amount": 16000,
+    "delivery_fee": 1500,
+    "reviews": []
+},{
+    "_id": 20,
+    "name": "네코정",
+    "img": "네코정.jpg",
+    "category": "japanese",
+    "lng": 37.62737921719757, 
+    "lat": 127.07690737157155,
+    "min_order_amount": 15000,
+    "delivery_fee": 1200,
+    "reviews": []
+}]

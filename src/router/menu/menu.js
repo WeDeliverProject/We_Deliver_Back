@@ -6,14 +6,37 @@ export const menuListMd = async (ctx, next) => {
   const { restaurantId } = ctx.params;
   const { collection } = ctx.state;
 
-  const rows = await collection.find(
-    {_id : Number(restaurantId)},{projection:{"menu":1, _id:0}}
-  ).toArray();
+  const rows = await collection.aggregate([
+    {
+      $match: {
+        "restaurant_id": Number(restaurantId)
+      }
+    },
+    {
+      $lookup: {
+        from: "restaurant",
+        localField: "restaurant_id",
+        foreignField: "_id",
+        as: "restaurantInfo"
+      },
+    },
+    { $unwind: "$restaurantInfo" },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        price: 1,
+        img: 1,
+        category: 1
+      }
+    }
+  ]).toArray();
 
   ctx.state.body= {
-    count: rows[0].menu.length,
-    results: rows[0].menu
+    count: rows.length,
+    results: rows
   }
+
   await next();
 };
 
@@ -37,7 +60,7 @@ export const plusMenuListMd = async (ctx, next) => {
 
 export const createCollectionMd = async (ctx, next) => {
   const { conn } = ctx.state;
-  const collection = conn.collection('restaurant');
+  const collection = conn.collection('menu');
   ctx.state.collection = collection;
 
   await next();
