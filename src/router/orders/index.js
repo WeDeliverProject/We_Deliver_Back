@@ -10,4 +10,5 @@ router.post("/joint", ...orders.createJoint);
 
 router.get("/joint", ...orders.readAllJoint);
 
+
 export default router;

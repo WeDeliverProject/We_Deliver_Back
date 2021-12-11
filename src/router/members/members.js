@@ -98,7 +98,8 @@ export const loginMd = async (ctx, next) => {
   const token = await generateToken({...row[0]})
 
   ctx.state.body={
-    accessToken: token
+    accessToken: token,
+    nickname: row[0].nickname,
   }
 
   await next();
