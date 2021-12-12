@@ -74,6 +74,7 @@ export const readAllJointMd = async (ctx, next) => {
         _id: 1,
         price: 1,
         name: "$restaurantInfo.name",
+        img: "$restaurantInfo.img",
         lng: "$restaurantInfo.lng",
         lat: "$restaurantInfo.lat",
         min_order_amount: "$restaurantInfo.min_order_amount",
