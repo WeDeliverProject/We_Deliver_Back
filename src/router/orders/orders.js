@@ -1,52 +1,129 @@
 import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
+import { menuListMd } from "../menu/menu";
 import * as CommonMd from "../middlewares";
-import fs from "fs";
-import path from "path";
 
 export const createOrderMd = async (ctx, next) => {
   
-  const { collection } = ctx.state;
+  const { collection, user } = ctx.state;
+  const { name, count, price, restaurantId, menuId, addition} = ctx.request.body;
 
+  const rows = await collection.find(
+    {
+      "member_id": user._id,
+      "isAccept": 0,
+    }
+  ).toArray();
+
+  const menu = await collection.find(
+    {
+      "menu.id": menuId,
+      "isAccept": 0
+    },
+    {
+      projection: {
+        "menu": 1,
+      }
+    }
+  ).toArray();
+
+  if (rows.length > 0 && menu.length === 0) {
+    await collection.updateOne(
+      {
+        "member_id": user._id,
+        "isAccept": 0
+      }, 
+      {
+        $push: {
+          "menu": 
+            {
+              "id": menuId,
+              "name": name,
+              "count": count,
+              "price": price,
+              "addition": addition,
+            }
+        }
+      }
+    )
+  } else if (menu.length > 0) { 
+    
+    const r = menu[0].menu.filter((item) => {
+      if(item.id === menuId) return true;
+    })
+
+    console.log(r)
+    r[0]['count'] = r[0].count+1;
+    console.log(r)
+    await collection.updateOne(
+      {
+        "menu.id": menuId,
+        "isAccept": 0
+      },
+      {
+        $pull: {
+          "menu":
+            {
+              "id": menuId,
+            }
+        }
+      }
+    )
+    
+    await collection.updateOne(
+      {
+        "member_id": user._id,
+        "isAccept": 0
+      },
+      {
+        $push: {
+          "menu": r[0]
+        }
+      }
+    )
+
+  } else {
+    await collection.insertOne({
+      _id: UUID(),
+      "member_id": user._id,
+      "restaurant_id": Number(restaurantId),
+      "isAccept": 0,
+      "joint" : 0,
+      "menu": [
+        {
+          "id": menuId,
+          "name": name,
+          "count": count,
+          "price": price,
+        }
+      ]
+    })
+  }
 
   await next();
 };
 
 export const createJointMd = async (ctx, next) => {
-  const { collection } = ctx.state;
-  const { restaurantId, price, name } = ctx.request.body;
+  const { collection, user } = ctx.state;
+  const { price } = ctx.request.body;
 
-  const query = { 'name': name }
-
-  const option = { upsert: true };
+  const query = { 
+    'member_id': user._id,
+    'isAccept': 0
+  }
 
   const newValue = {
     $set: {
-      order: [
-        {
-          "id": UUID(),
-          "price": price,
-          "joint": true,
-        }
-      ]
+      "joint": 1,
+      "isAccept": 1,
+      "price": price,
     }
   }
 
   const result = await collection.updateOne(
-    query, newValue, option
+    query, newValue
   )
   
-  console.log(result);
-  
-  await next();
-
-}
-
-export const createCollectionMd = async (ctx, next) => {
-  const {conn} = ctx.state;
-  const collection = conn.collection('order');
-  ctx.state.collection = collection;
-
   await next();
 }
 
@@ -91,7 +168,208 @@ export const readAllJointMd = async (ctx, next) => {
   await next();
 }
 
-export const create = [
+export const readOrderMd = async (ctx, next) => {
+
+  const { collection, user } = ctx.state;
+
+  const rows = await collection.find(
+    {
+      "member_id": user._id,
+      "isAccept": 0
+    },
+    {
+      projection: {
+        "menu": 1
+      }
+    }
+  ).toArray();
+
+  if (rows.length > 0) {
+    ctx.state.body = {
+      count: rows[0].menu.length,
+      results: rows[0].menu
+    }
+  } else {
+    ctx.state.body = {
+      count: rows.length,
+      results: rows
+    }
+  }
+
+  await next();
+}
+
+export const deleteMenuMd = async (ctx, next) => {
+
+  const { collection, user } = ctx.state;
+  const { menuId } = ctx.request.body;
+
+  await collection.updateOne(
+    {
+      "member_id": user._id,
+      "isAccept": 0
+    }, 
+    {
+      $pull: {
+        "menu": 
+          {
+            "id": menuId,
+          }
+      }
+    }) 
+  await next();
+}
+
+export const createMd = async (ctx, next) => {
+
+  const { collection, user } = ctx.state;
+  const { price } = ctx.request.body;
+
+  await collection.updateOne(
+    {
+      "member_id": user._id,
+      "isAccept": 0
+    },
+    {
+      $set: {
+        "isAccept": 1,
+        "price": price,
+      }
+    }
+  )
+  
+  await next();
+}
+
+export const minusMd = async (ctx, next) => {
+
+  const { collection, user } = ctx.state;
+  const { menuId } = ctx.request.body;
+
+  const menu = await collection.find(
+    {
+      "menu.id": menuId,
+      "isAccept": 0
+    },
+    {
+      projection: {
+        "menu": 1,
+      }
+    }
+  ).toArray();
+
+  const r = menu[0].menu.filter((item) => {
+    if(item.id === menuId) return true;
+  })
+
+  r[0]['count'] = r[0].count-1;
+  if(r[0]['count'] === 0) {
+    await collection.updateOne(
+      {
+        "menu.id": menuId,
+        "isAccept": 0
+      },
+      {
+        $pull: {
+          "menu":
+            {
+              "id": menuId,
+            }
+        }
+      }
+    )
+  } else {
+    await collection.updateOne(
+      {
+        "menu.id": menuId,
+        "isAccept": 0
+      },
+      {
+        $pull: {
+          "menu":
+            {
+              "id": menuId,
+            }
+        }
+      }
+    )
+    
+    await collection.updateOne(
+      {
+        "member_id": user._id,
+        "isAccept": 0
+      },
+      {
+        $push: {
+          "menu": r[0]
+        }
+      }
+    )
+  }
+  
+  await next();
+}
+
+export const plusMd = async (ctx, next) => {
+
+  const { collection, user } = ctx.state;
+  const { menuId } = ctx.request.body;
+
+  const menu = await collection.find(
+    {
+      "menu.id": menuId,
+      "isAccept": 0
+    },
+    {
+      projection: {
+        "menu": 1,
+      }
+    }
+  ).toArray();
+
+  const r = menu[0].menu.filter((item) => {
+    if(item.id === menuId) return true;
+  })
+
+  r[0]['count'] = r[0].count+1;
+  await collection.updateOne(
+    {
+      "menu.id": menuId,
+      "isAccept": 0
+    },
+    {
+      $pull: {
+        "menu":
+          {
+            "id": menuId,
+          }
+      }
+    }
+  )
+  
+  await collection.updateOne(
+    {
+      "member_id": user._id,
+      "isAccept": 0
+    },
+    {
+      $push: {
+        "menu": r[0]
+      }
+    }
+  )
+  await next();
+}
+
+export const createCollectionMd = async (ctx, next) => {
+  const {conn} = ctx.state;
+  const collection = conn.collection('order');
+  ctx.state.collection = collection;
+
+  await next();
+}
+
+export const createList = [
   CommonMd.jwtMd,
   CommonMd.createConnectionMd,
   createCollectionMd,
@@ -114,3 +392,42 @@ export const readAllJoint= [
   CommonMd.responseMd
 ]
 
+export const readOrder = [
+  CommonMd.jwtMd,
+  CommonMd.createConnectionMd,
+  createCollectionMd,
+  readOrderMd,
+  CommonMd.responseMd
+]
+
+export const deleteMenu = [
+  CommonMd.jwtMd,
+  CommonMd.createConnectionMd,
+  createCollectionMd,
+  deleteMenuMd,
+  CommonMd.responseMd
+]
+
+export const create = [
+  CommonMd.jwtMd,
+  CommonMd.createConnectionMd,
+  createCollectionMd,
+  createMd,
+  CommonMd.responseMd
+]
+
+export const plus = [
+  CommonMd.jwtMd,
+  CommonMd.createConnectionMd,
+  createCollectionMd,
+  plusMd,
+  CommonMd.responseMd
+]
+
+export const minus = [
+  CommonMd.jwtMd,
+  CommonMd.createConnectionMd,
+  createCollectionMd,
+  minusMd,
+  CommonMd.responseMd
+]
