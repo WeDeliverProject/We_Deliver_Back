@@ -12,7 +12,7 @@ export const generateToken = (payload) => {
       payload,
       jwtSecret,
       {
-        expiresIn: "2h",
+        expiresIn: "7d",
       },
       (error, token) => {
         if (error) reject(error);
