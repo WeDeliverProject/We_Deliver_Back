@@ -2,6 +2,7 @@ import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
 import { menuListMd } from "../menu/menu";
 import * as CommonMd from "../middlewares";
+import moment from "moment";
 
 export const createOrderMd = async (ctx, next) => {
   const { collection, user } = ctx.state;
@@ -12,6 +13,7 @@ export const createOrderMd = async (ctx, next) => {
     .find({
       member_id: user._id,
       isAccept: 0,
+      "restaurant_id": Number(restaurantId),
     })
     .toArray();
 
@@ -34,6 +36,7 @@ export const createOrderMd = async (ctx, next) => {
       {
         member_id: user._id,
         isAccept: 0,
+        "restaurant_id": Number(restaurantId),
       },
       {
         $push: {
@@ -59,6 +62,7 @@ export const createOrderMd = async (ctx, next) => {
       {
         "menu.id": menuId,
         isAccept: 0,
+        "restaurant_id": Number(restaurantId),
       },
       {
         $pull: {
@@ -73,6 +77,7 @@ export const createOrderMd = async (ctx, next) => {
       {
         member_id: user._id,
         isAccept: 0,
+        "restaurant_id": Number(restaurantId),
       },
       {
         $push: {
@@ -88,6 +93,7 @@ export const createOrderMd = async (ctx, next) => {
       isAccept: 0,
       joint: 0,
       review: 0,
+      date: moment().format('YYYY-MM-DDTHH:mm:ss'),
       menu: [
         {
           id: menuId,
@@ -357,6 +363,41 @@ export const plusMd = async (ctx, next) => {
   await next();
 };
 
+export const myOrderListMd = async (ctx, next) => {
+
+  const { collection, user } = ctx.state;
+  const rows = await collection.find(
+    {"member_id": user._id, "isAccept": 1}
+  ).toArray();
+
+  ctx.state.body = {
+    count: rows.length,
+    results: rows
+  }
+
+  await next();
+}
+
+export const reviewOrderMd = async (ctx, next) => {
+  const {collection, user} = ctx.state;
+  const {restaurantId}= ctx.params;
+
+  const rows = await collection.find(
+    {"restaurant_id": Number(restaurantId), "member_id": user._id, "isAccept": 1, "review": 0, "joint": 0}
+  ).toArray();
+
+  let row = {};
+  if (rows.length > 0) {
+    row = rows[rows.length - 1];
+  }
+
+  ctx.state.body = {
+    ...row
+  }
+
+  await next();
+}
+
 export const createCollectionMd = async (ctx, next) => {
   const { conn } = ctx.state;
   const collection = conn.collection("order");
@@ -427,3 +468,19 @@ export const minus = [
   minusMd,
   CommonMd.responseMd,
 ];
+
+export const myOrderList = [
+  CommonMd.jwtMd,
+  CommonMd.createConnectionMd,
+  createCollectionMd,
+  myOrderListMd,
+  CommonMd.responseMd,
+]
+
+export const reviewOrder = [
+  CommonMd.jwtMd,
+  CommonMd.createConnectionMd,
+  createCollectionMd,
+  reviewOrderMd,
+  CommonMd.responseMd
+]

@@ -19,5 +19,9 @@ router.post("/plus", ...orders.plus);
 
 router.post("/minus", ...orders.minus);
 
+router.get("/my", ...orders.myOrderList);
+
+router.get("/review/:restaurantId", ...orders.reviewOrder);
+
 
 export default router;
