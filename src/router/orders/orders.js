@@ -1,6 +1,5 @@
 import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
-import { menuListMd } from "../menu/menu";
 import * as CommonMd from "../middlewares";
 import moment from "moment";
 
@@ -174,12 +173,14 @@ export const readAllJointMd = async (ctx, next) => {
 
 export const readOrderMd = async (ctx, next) => {
   const { collection, user } = ctx.state;
+  const { restaurantId } = ctx.params;
 
   const rows = await collection
     .find(
       {
         member_id: user._id,
         isAccept: 0,
+        restaurant_id: Number(restaurantId)
       },
       {
         projection: {
@@ -188,6 +189,8 @@ export const readOrderMd = async (ctx, next) => {
       }
     )
     .toArray();
+    console.log(rows);
+    console.log(restaurantId);
 
   if (rows.length > 0) {
     ctx.state.body = {
@@ -206,12 +209,13 @@ export const readOrderMd = async (ctx, next) => {
 
 export const deleteMenuMd = async (ctx, next) => {
   const { collection, user } = ctx.state;
-  const { menuId } = ctx.request.body;
+  const { menuId, restaurantId } = ctx.request.body;
 
   await collection.updateOne(
     {
       member_id: user._id,
       isAccept: 0,
+      restaurant_id: Number(restaurantId),
     },
     {
       $pull: {
@@ -226,12 +230,13 @@ export const deleteMenuMd = async (ctx, next) => {
 
 export const createMd = async (ctx, next) => {
   const { collection, user } = ctx.state;
-  const { price } = ctx.request.body;
+  const { price, restaurantId } = ctx.request.body;
 
   await collection.updateOne(
     {
       member_id: user._id,
       isAccept: 0,
+      restaurant_id: Number(restaurantId),
     },
     {
       $set: {
@@ -246,13 +251,14 @@ export const createMd = async (ctx, next) => {
 
 export const minusMd = async (ctx, next) => {
   const { collection, user } = ctx.state;
-  const { menuId } = ctx.request.body;
+  const { menuId, restaurantId } = ctx.request.body;
 
   const menu = await collection
     .find(
       {
         "menu.id": menuId,
         isAccept: 0,
+        restaurant_id: Number(restaurantId),
       },
       {
         projection: {
@@ -272,6 +278,7 @@ export const minusMd = async (ctx, next) => {
       {
         "menu.id": menuId,
         isAccept: 0,
+        restaurant_id: Number(restaurantId),
       },
       {
         $pull: {
@@ -286,6 +293,7 @@ export const minusMd = async (ctx, next) => {
       {
         "menu.id": menuId,
         isAccept: 0,
+        restaurant_id: Number(restaurantId),
       },
       {
         $pull: {
@@ -300,6 +308,7 @@ export const minusMd = async (ctx, next) => {
       {
         member_id: user._id,
         isAccept: 0,
+        restaurant_id: Number(restaurantId),
       },
       {
         $push: {
@@ -314,13 +323,14 @@ export const minusMd = async (ctx, next) => {
 
 export const plusMd = async (ctx, next) => {
   const { collection, user } = ctx.state;
-  const { menuId } = ctx.request.body;
+  const { menuId, restaurantId } = ctx.request.body;
 
   const menu = await collection
     .find(
       {
         "menu.id": menuId,
         isAccept: 0,
+        restaurant_id: Number(restaurantId),
       },
       {
         projection: {
@@ -339,6 +349,7 @@ export const plusMd = async (ctx, next) => {
     {
       "menu.id": menuId,
       isAccept: 0,
+      restaurant_id: Number(restaurantId),
     },
     {
       $pull: {
@@ -353,6 +364,7 @@ export const plusMd = async (ctx, next) => {
     {
       member_id: user._id,
       isAccept: 0,
+      restaurant_id: Number(restaurantId),
     },
     {
       $push: {

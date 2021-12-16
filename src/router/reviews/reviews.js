@@ -1,20 +1,53 @@
 import Boom from "@hapi/boom";
 import { v4 as UUID } from "uuid";
 import * as CommonMd from "../middlewares";
+import fs from "fs";
+import path from "path";
+
 
 export const saveReviewMd = async (ctx, next) => {
-  const { collection } = ctx.state;
-  const { restaurantId, starRating, contents, memberId } = ctx.request.body;
+  const { collection, order } = ctx.state;
+  const { restaurantId, star_rating, content, nickname, orderId, menu } = ctx.request.body;
 
   const reviewId = UUID();
 
-  await collection.insertOne({
+  const image = ctx.request.files.image === undefined ? [] : ctx.request.files.image;
+
+  const appDir = path.dirname(image.path);
+  const imageName = image.name;
+  await fs.renameSync(image.path, `${appDir}/${imageName}`);
+
+  const body = {
     _id: reviewId,
-    restaurantId: restaurantId,
-    starRating: starRating,
-    contents: contents,
-    memberId: memberId,
-  });
+    star_rating: Number(star_rating),
+    content: content,
+    nickname: nickname,
+    img: imageName,
+    menu: menu,
+  };
+  console.log(body);
+
+  await collection.updateOne(
+    {
+      _id: Number(restaurantId),
+    },
+    {
+      $push: {
+        reviews: body,
+      },
+    }
+  );
+
+  await order.updateOne(
+    {
+      _id: orderId,
+    },
+    {
+      $set: {
+        review: 1
+      }
+    }
+  )
 
   await next();
 };
@@ -107,7 +140,9 @@ export const listTodayReviewMd = async (ctx, next) => {
 export const createCollectionMd = async (ctx, next) => {
   const { conn } = ctx.state;
   const collection = conn.collection("restaurant");
+  const order = conn.collection("order");
   ctx.state.collection = collection;
+  ctx.state.order = order;
 
   await next();
 };

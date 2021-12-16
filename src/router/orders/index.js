@@ -11,7 +11,7 @@ router.post("/delete", ...orders.deleteMenu);
 
 router.get("/joint", ...orders.readAllJoint);
 
-router.get("/", ...orders.readOrder);
+router.get("/myList/:restaurantId", ...orders.readOrder);
 
 router.post("/", ...orders.create);
 
