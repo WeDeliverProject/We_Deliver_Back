@@ -9,11 +9,10 @@ import { createServer } from "http";
 import { MongoClient } from "mongodb";
 import NodeCache from "node-cache";
 
-const client = new MongoClient(Config.DB_URL);
 
 const app = new Koa();
 const server = createServer(app.callback());
-
+const client = new MongoClient(Config.DB_URL);
 const cache = new NodeCache()
 
 

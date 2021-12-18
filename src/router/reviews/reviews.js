@@ -25,7 +25,6 @@ export const saveReviewMd = async (ctx, next) => {
     img: imageName,
     menu: menu,
   };
-  console.log(body);
 
   await collection.updateOne(
     {
@@ -89,8 +88,6 @@ export const listTodayReviewMd = async (ctx, next) => {
   const {collection} = ctx.state;
   const { cache } = ctx;
   const row = cache.get('todayReview');
-  
-  console.log(row);
 
   if(row === undefined) {
     const rows = await collection.find(

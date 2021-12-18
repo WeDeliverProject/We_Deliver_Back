@@ -50,13 +50,20 @@ export const createOrderMd = async (ctx, next) => {
       }
     );
   } else if (menu.length > 0) {
-    const r = menu[0].menu.filter((item) => {
-      if (item.id === menuId) return true;
+    let idx;
+    const r = menu[0].menu.filter((item, i) => {
+      if (item.id === menuId) {
+        idx = i;
+        return true;
+      }
     });
 
     console.log(r);
     r[0]["count"] = r[0].count + 1;
     console.log(r);
+
+    const body = {}
+    body[`menu.${idx}.count`] = r[0]["count"];
     await collection.updateOne(
       {
         "menu.id": menuId,
@@ -64,24 +71,7 @@ export const createOrderMd = async (ctx, next) => {
         "restaurant_id": Number(restaurantId),
       },
       {
-        $pull: {
-          menu: {
-            id: menuId,
-          },
-        },
-      }
-    );
-
-    await collection.updateOne(
-      {
-        member_id: user._id,
-        isAccept: 0,
-        "restaurant_id": Number(restaurantId),
-      },
-      {
-        $push: {
-          menu: r[0],
-        },
+        $set: body
       }
     );
   } else {
@@ -99,6 +89,7 @@ export const createOrderMd = async (ctx, next) => {
           name: name,
           count: count,
           price: price,
+          addition: addition,
         },
       ],
     });
@@ -189,8 +180,6 @@ export const readOrderMd = async (ctx, next) => {
       }
     )
     .toArray();
-    console.log(rows);
-    console.log(restaurantId);
 
   if (rows.length > 0) {
     ctx.state.body = {
@@ -230,7 +219,7 @@ export const deleteMenuMd = async (ctx, next) => {
 
 export const createMd = async (ctx, next) => {
   const { collection, user } = ctx.state;
-  const { price, restaurantId } = ctx.request.body;
+  const { price, restaurantId, address } = ctx.request.body;
 
   await collection.updateOne(
     {
@@ -242,6 +231,7 @@ export const createMd = async (ctx, next) => {
       $set: {
         isAccept: 1,
         price: price,
+        address: address,
       },
     }
   );
@@ -267,9 +257,12 @@ export const minusMd = async (ctx, next) => {
       }
     )
     .toArray();
-
-  const r = menu[0].menu.filter((item) => {
-    if (item.id === menuId) return true;
+  let idx;
+  const r = menu[0].menu.filter((item, i) => {
+    if (item.id === menuId) {
+      idx = i;
+      return true;
+    }
   });
 
   r[0]["count"] = r[0].count - 1;
@@ -289,6 +282,8 @@ export const minusMd = async (ctx, next) => {
       }
     );
   } else {
+    const body = {}
+    body[`menu.${idx}.count`] = r[0]["count"];
     await collection.updateOne(
       {
         "menu.id": menuId,
@@ -296,24 +291,7 @@ export const minusMd = async (ctx, next) => {
         restaurant_id: Number(restaurantId),
       },
       {
-        $pull: {
-          menu: {
-            id: menuId,
-          },
-        },
-      }
-    );
-
-    await collection.updateOne(
-      {
-        member_id: user._id,
-        isAccept: 0,
-        restaurant_id: Number(restaurantId),
-      },
-      {
-        $push: {
-          menu: r[0],
-        },
+        $set: body
       }
     );
   }
@@ -340,11 +318,18 @@ export const plusMd = async (ctx, next) => {
     )
     .toArray();
 
-  const r = menu[0].menu.filter((item) => {
-    if (item.id === menuId) return true;
+  let idx;
+  const r = menu[0].menu.filter((item, i) => {
+    if (item.id === menuId) {
+      idx = i;
+      return true;
+    }
   });
 
   r[0]["count"] = r[0].count + 1;
+
+  const body = {}
+  body[`menu.${idx}.count`] = r[0]["count"];
   await collection.updateOne(
     {
       "menu.id": menuId,
@@ -352,36 +337,54 @@ export const plusMd = async (ctx, next) => {
       restaurant_id: Number(restaurantId),
     },
     {
-      $pull: {
-        menu: {
-          id: menuId,
-        },
-      },
+      $set: body
     }
   );
 
-  await collection.updateOne(
-    {
-      member_id: user._id,
-      isAccept: 0,
-      restaurant_id: Number(restaurantId),
-    },
-    {
-      $push: {
-        menu: r[0],
-      },
-    }
-  );
   await next();
 };
 
 export const myOrderListMd = async (ctx, next) => {
 
   const { collection, user } = ctx.state;
-  const rows = await collection.find(
-    {"member_id": user._id, "isAccept": 1}
-  ).toArray();
 
+  const rows = await collection
+    .aggregate([
+      {
+        $match: {
+          member_id: user._id, 
+          isAccept: 1
+        },
+      },
+      {
+        $lookup: {
+          from: "restaurant",
+          localField: "restaurant_id",
+          foreignField: "_id",
+          as: "restaurantInfo",
+        },
+      },
+      { $unwind: "$restaurantInfo" },
+      {
+        $project: {
+          _id: 1,
+          member_id: 1,
+          price: 1,
+          restaurant_id:1,
+          isAccept:1,
+          joint:1,
+          review:1,
+          date:1,
+          menu:1,
+          address: 1,
+          restaurantName: "$restaurantInfo.name",
+          min_order_amount: "$restaurantInfo.min_order_amount",
+          delivery_fee: "$restaurantInfo.delivery_fee",
+        },
+      },
+    ])
+    .toArray();
+  
   ctx.state.body = {
     count: rows.length,
     results: rows
