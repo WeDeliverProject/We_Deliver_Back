@@ -379,6 +379,7 @@ export const myOrderListMd = async (ctx, next) => {
           address: 1,
           restaurantName: "$restaurantInfo.name",
           min_order_amount: "$restaurantInfo.min_order_amount",
+          restaurantImg: "$restaurantInfo.img",
           delivery_fee: "$restaurantInfo.delivery_fee",
         },
       },
